@@ -261,6 +261,7 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
+                - *Org1
                 - *Org2
             Capabilities:
                 <<: *ApplicationCapabilities

@@ -14,7 +14,6 @@ function printHelp() {
     println "  net.sh \033[0;32mup\033[0m [Flags]"
     println
     println "    Flags:"
-    println "    -c <channel name> - Name of channel to create (defaults to \"channel\")"
     println "    -verbose - Verbose mode"
     println
     println "    -h - Print this message"
@@ -60,11 +59,10 @@ function printHelp() {
     println "  net.sh <Mode> [Flags]"
     println "    Modes:"
     println "      \033[0;32mup\033[0m - Bring up Fabric orderer and peer nodes. No channel is created"
-    println "      \033[0;32mup createChannel\033[0m - Bring up fabric net with one channel"
     println "      \033[0;32mcreateChannel\033[0m - Create and join a channel after the net is created"
     println "      \033[0;32mdeployCC\033[0m - Deploy a chaincode to a channel (defaults to asset-transfer-basic)"
-    println "      \033[0;32mdown\033[0m - Start the net"
-    println "      \033[0;32mdown\033[0m - Stop the net"
+    println "      \033[0;32mstart\033[0m - Start the net"
+    println "      \033[0;32mstop\033[0m - Stop the net"
     println "      \033[0;32mdown\033[0m - Bring down the net"
     println
     println "    Flags:"
@@ -92,6 +90,8 @@ function printHelp() {
     println "   bash net.sh createChannel -c channel"
     println "   bash net.sh deployCC -c channel -cid 1 -ccn patient -ccl go -ccv 1.0 -ccs 1 -ccp ../chaincode/channel1/patient/ -ccep \"OR('Org1.member')\" -ccm all"
     println "   bash net.sh deployCC -c channel -cid 1 -ccn patient -ccl go -ccv 1.0 -ccs 1 -ccp ../chaincode/channel1/patient/ -ccm test"
+    println "   bash net.sh deployCC -c channel -cid 2 -ccn patient -ccl go -ccv 1.0 -ccs 1 -ccp ../chaincode/channel2/patient/ -ccep \"OR('Org2.member')\" -ccm all"
+    println "   bash net.sh deployCC -c channel -cid 12 -ccn bridge -ccl go -ccv 1.0 -ccs 1 -ccp ../chaincode/channel12/bridge/ -ccep \"AND('Org1.member','Org2.member')\" -ccm all"
   fi
 }
 

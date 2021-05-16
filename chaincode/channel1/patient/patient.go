@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 
-	"github.com/SWU-Blockchain/mol-server/chaincode/structures"
+	"github.com/1uvu/Fabric-Demo/crypt"
+	"github.com/1uvu/Fabric-Demo/structures"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -34,12 +36,17 @@ type QueryResult struct {
 	Record *Patient
 }
 
+type DigestResult struct {
+	Key    string `json:"Key"`
+	Digest string `json: "digest"`
+}
+
 //
 // 提供的功能包括：初始化、登记、更新、查询、以及删除
 //
 
 //
-// 调用示例: '{"function":"registerPatient","Args":["p1", "{\"name\": \"ZJH-1\", \"gender\": \"male\", \"birth\": \"1998-10-01\", \"identifyID\": \"xxxxxx-19981001-xxxx\", \"phoneNumber\": \"151-2300-0000\", \"address\": \"ChongQing\", \"nativePlace\": \"NeiMengGu\", \"creditCard\": \"6217-0000-0000-0000\", \"healthcareID\": \"xxxx-4xxx-xxxx-xxxx\"}"]}'
+// 调用示例: '{"function":"registerPatient","Args":["p1", "{\"name\": \"ZJH-1\", \"gender\": \"male\", \"birth\": \"1998-10-01\", \"identifyID\": \"xxxxxx-xxxx-19981001-xxxx-xxxx\", \"phoneNumber\": \"151-2300-0000\", \"address\": \"ChongQing\", \"nativePlace\": \"NeiMengGu\", \"creditCard\": \"6217-0000-0000-0000\", \"healthcareID\": \"xxxx-4xxx-xxxx-xxxx\"}"]}'
 //
 func (contract *SmartContract) RegisterPatient(ctx contractapi.TransactionContextInterface, patientID string, patient Patient) error {
 	// todo 实现数据检查逻辑
@@ -92,7 +99,9 @@ func (contract *SmartContract) QueryPatient(ctx contractapi.TransactionContextIn
 	return patient, nil
 }
 
-// QueryAllCars returns all cars found in world state
+//
+// 调用示例: '{"function":"queryAllPatients","Args":[]}'
+// QueryAllCars returns all patients found in world state
 func (s *SmartContract) QueryAllPatients(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
 	startKey := ""
 	endKey := ""
@@ -128,4 +137,25 @@ func (s *SmartContract) QueryAllPatients(ctx contractapi.TransactionContextInter
 //
 func (contract *SmartContract) DeletePatient(ctx contractapi.TransactionContextInterface, patientID string) error {
 	return ctx.GetStub().DelState(patientID)
+}
+
+//
+// 调用示例: '{"function":"makeDigest","Args":["p1"]}'
+//
+func (contract *SmartContract) MakeDigest(ctx contractapi.TransactionContextInterface, patientID string) (*DigestResult, error) {
+	patientAsBytes, err := ctx.GetStub().GetState(patientID)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to read from world state. %s", err.Error())
+	}
+
+	patient := new(Patient)
+	_ = json.Unmarshal(patientAsBytes, patient)
+
+	// 计算密文和摘要
+	cryptoAsBytes := crypt.AesEncryptCBC([]byte(patient.IdentifyID), []byte(patient.HealthcareID))
+	patientDigest := base64.StdEncoding.Strict().EncodeToString(cryptoAsBytes)
+
+	// 返回使用 hid 加密的 iid
+	return &DigestResult{patient.HealthcareID, patientDigest}, nil
 }

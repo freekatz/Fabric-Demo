@@ -1,2 +1,3 @@
 Installed chaincodes on peer:
-Package ID: patient_1.0:e5ccf89752bb5ece5f9e9565210f743a9bfe036ade9d68037100a2fcf8d296e5, Label: patient_1.0
+Package ID: patient_1.0:7e1638051646b4afa00c8f9aaa076edc09d1e62264cf4d6bd80fb0e4bace150d, Label: patient_1.0
+Package ID: bridge_1.0:e7ec0202669c3e59bed7d11662c90762b6ebf901fe3b5ef726aaa372bcee9e4d, Label: bridge_1.0

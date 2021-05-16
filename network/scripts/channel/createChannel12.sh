@@ -21,8 +21,6 @@ createChannel() {
     
     docker cp cli10:/opt/gopath/src/github.com/hyperledger/fabric/peer/${CHANNEL_NAME}12.block ./channel-artifacts/
 
-    docker cp ./channel-artifacts/${CHANNEL_NAME}12.block cli11:/opt/gopath/src/github.com/hyperledger/fabric/peer/ 
-
     docker cp ./channel-artifacts/${CHANNEL_NAME}12.block cli20:/opt/gopath/src/github.com/hyperledger/fabric/peer/ 
 }
 

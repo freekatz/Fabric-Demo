@@ -48,8 +48,9 @@ packageChaincode() {
   peer lifecycle chaincode package ${CC_NAME}_${CHANNEL_NAME}${CHANNEL_ID}.tar.gz --path ${CC_SRC_PATH} --label ${CC_NAME}_${CC_VERSION} >&log.txt
 
   mv ${CC_NAME}_${CHANNEL_NAME}${CHANNEL_ID}.tar.gz ${PWD}/../chaincode/releases/
-
+  
   docker cp ${PWD}/../chaincode/releases/${CC_NAME}_${CHANNEL_NAME}${CHANNEL_ID}.tar.gz cli10:/opt/gopath/src/github.com/hyperledger/fabric/peer/
+  docker cp ${PWD}/../chaincode/releases/${CC_NAME}_${CHANNEL_NAME}${CHANNEL_ID}.tar.gz cli20:/opt/gopath/src/github.com/hyperledger/fabric/peer/
 
   res=$?
   { set +x; } 2>/dev/null
@@ -72,9 +73,9 @@ readPackageID() {
   PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" /opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/cc/package_id.txt)
 }
 
-approveForMyOrg() { 
+approveForMyOrg() {
   readPackageID
-
+  
   set -x
   peer lifecycle chaincode approveformyorg --tls true --cafile ${ORDERER_CA} --channelID ${CHANNEL_NAME}${CHANNEL_ID} --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} >&log.txt
   res=$?
@@ -84,7 +85,7 @@ approveForMyOrg() {
 
 commitChaincodeDefinition() {
   set -x
-  peer lifecycle chaincode commit  -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA --channelID ${CHANNEL_NAME}${CHANNEL_ID} --name ${CC_NAME} --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt 
+  peer lifecycle chaincode commit  -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA --channelID ${CHANNEL_NAME}${CHANNEL_ID} --name ${CC_NAME} --version ${CC_VERSION} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
   >&log.txt
   res=$?
   { set +x; } 2>/dev/null
@@ -95,41 +96,21 @@ chaincodeInvokeInit() {
   set -x
   fcn_call='{"function":"'${CC_INIT_FCN}'","Args":[]}'
   infoln "invoke fcn call:${fcn_call}"
-  peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA -C ${CHANNEL_NAME}${CHANNEL_ID} -n ${CC_NAME}  --isInit -c ${fcn_call} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+  peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA -C ${CHANNEL_NAME}${CHANNEL_ID} -n ${CC_NAME}  --isInit -c ${fcn_call} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
   >&log.txt
   res=$?
   { set +x; } 2>/dev/null
   cat log.txt
 }
 
+
 chaincodeInvokeTest() {
-  ## !!! 输入参数在 shell 中不要有空格
-  # infoln "登记病人信息"
-  # chaincodeInvoke '{"function":"registerPatient","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"xxxxxx-xxxx-19981001-xxxx-xxxx\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"ABCDEFGHIJKLMNOP\"}"]}' patient
-  # sleep 5
-  # infoln "查询登记结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
-  # sleep 5
-  # infoln "更新病人信息（名字和性别）"
-  # chaincodeInvoke '{"function":"updatePatient","Args":["p1","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}' patient
-  # sleep 5
-  # infoln "查询更新结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
-  # sleep 5
-  # infoln "删除病人信息"
-  # chaincodeInvoke '{"function":"deletePatient","Args":["p1"]}' patient
-  # sleep 5
-  # infoln "查询删除结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
-  # sleep 5
-  infoln "再次登记病人信息"
-  chaincodeInvoke '{"function":"registerPatient","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"xxxx-19981001-xxxx\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"ABCDEFGHIJKLMNOP\"}"]}' patient
+    ## !!! 输入参数在 shell 中不要有空格
+  infoln "登记病人医保信息"
+  chaincodeInvoke '{"function":"register","Args":["ABCDEFGHIJKLMNOP","eZ2Tl2r50pkM1lEUgr7TmJe/hC3IOkM58EO67+rpCog="]}' bridge
   sleep 5
-  infoln "查询登记结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
-  sleep 5
-  infoln "获取病人医保信息"
-  chaincodeInvoke '{"function":"makeDigest","Args":["p1"]}' patient
+  infoln "验证病人医保信息"
+  chaincodeInvoke '{"function":"verify","Args":["ABCDEFGHIJKLMNOP","eZ2Tl2r50pkM1lEUgr7TmJe/hC3IOkM58EO67+rpCog="]}' bridge
 }
 
 chaincodeInvoke() {
@@ -137,7 +118,7 @@ chaincodeInvoke() {
   local fcn_call=$1
   local cc_name=$2
   infoln "invoke fcn call:${fcn_call}"
-  peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA --channelID ${CHANNEL_NAME}${CHANNEL_ID} --name ${cc_name} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt -c ${fcn_call}
+  peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA --channelID ${CHANNEL_NAME}${CHANNEL_ID} --name ${cc_name} --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/orgs/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c ${fcn_call}
   >&log.txt
   res=$?
   { set +x; } 2>/dev/null

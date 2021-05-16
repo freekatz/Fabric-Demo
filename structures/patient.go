@@ -65,6 +65,7 @@ func (p *Patient) UpdatePatientField(field string, value interface{}) error {
 
 type PatientInHOS struct {
 	Patient
+	// 长度为 128，192 或 256
 	HealthcareID string `json:"healthcareID"` // 医保卡号, 医院方的链码由病人登记, 医保局方自动生成
 }
 

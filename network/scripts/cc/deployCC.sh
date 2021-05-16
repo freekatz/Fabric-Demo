@@ -23,6 +23,8 @@ packageChaincode() {
     bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE package
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE package
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE package
   else
     errorln "Channel not exist!"
     exit 1
@@ -40,6 +42,10 @@ installChaincode() {
     docker exec cli10 bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE install
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     docker exec cli20 bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE install
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE install
+
+    docker exec cli20 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE install
   else
     errorln "Channel not exist!"
     exit 1
@@ -57,6 +63,10 @@ approveForMyOrg() {
     docker exec cli10 bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE approve
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     docker exec cli20 bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE approve
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE approve
+
+    docker exec cli20 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE approve
   else
     errorln "Channel not exist!"
     exit 1
@@ -74,6 +84,8 @@ commitChaincodeDefinition() {
     docker exec cli10 bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE commit
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     docker exec cli20 bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE commit
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE commit
   else
     errorln "Channel not exist!"
     exit 1
@@ -91,6 +103,8 @@ chaincodeInvokeInit() {
     docker exec cli10 bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE init
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     docker exec cli20 bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE init
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE init
   else
     errorln "Channel not exist!"
     exit 1
@@ -107,6 +121,8 @@ chaincodeInvokeTest() {
     docker exec cli10 bash ./scripts/cc/deployCC1.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
   elif [ ${CHANNEL_ID} -eq 2 ]; then
     docker exec cli20 bash ./scripts/cc/deployCC2.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
+  elif [ ${CHANNEL_ID} -eq 12 ]; then
+    docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
   else
     errorln "Channel not exist!"
     exit 1
