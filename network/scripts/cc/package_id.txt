@@ -1,0 +1,2 @@
+Installed chaincodes on peer:
+Package ID: patient_1.0:e5ccf89752bb5ece5f9e9565210f743a9bfe036ade9d68037100a2fcf8d296e5, Label: patient_1.0

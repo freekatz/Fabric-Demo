@@ -1,0 +1,267 @@
+---
+################################################################################
+#
+#   ORGANIZATIONS
+#
+################################################################################
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        SkipAsForeign: false
+        ID: OrdererMSP
+        MSPDir: ../orgs/ordererOrganizations/example.com/msp
+        Policies: &OrdererOrgPolicies
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+        OrdererEndpoints:
+            - orderer.example.com:7050
+
+    - &Org1
+        Name: Org1
+        SkipAsForeign: false
+        ID: Org1MSP
+        MSPDir: ../orgs/peerOrganizations/org1.example.com/msp
+        Policies: &Org1Policies
+            Readers:
+                Type: Signature
+                Rule: "OR('Org1MSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org1MSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org1MSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Org1MSP.member')"
+        OrdererEndpoints:
+            - orderer.example.com:7050
+
+        AnchorPeers:
+            - Host: peer0.org1.example.com
+              Port: 7051
+
+    - &Org2
+        Name: Org2
+        SkipAsForeign: false
+        ID: Org2MSP
+        MSPDir: ../orgs/peerOrganizations/org2.example.com/msp
+        Policies: &Org2Policies
+            Readers:
+                Type: Signature
+                Rule: "OR('Org2MSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org2MSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org2MSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Org2MSP.member')"
+        OrdererEndpoints:
+            - orderer.example.com:7050
+
+        AnchorPeers:
+            - Host: peer0.org2.example.com
+              Port: 9051
+
+
+
+################################################################################
+#
+#   CAPABILITIES
+#
+################################################################################
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+################################################################################
+#
+#   APPLICATION
+#
+################################################################################
+Application: &ApplicationDefaults
+    ACLs: &ACLsDefault
+        _lifecycle/CheckCommitReadiness: /Channel/Application/Writers
+        _lifecycle/CommitChaincodeDefinition: /Channel/Application/Writers
+        _lifecycle/QueryChaincodeDefinition: /Channel/Application/Readers
+        _lifecycle/QueryChaincodeDefinitions: /Channel/Application/Readers
+
+        lscc/ChaincodeExists: /Channel/Application/Readers
+        lscc/GetDeploymentSpec: /Channel/Application/Readers
+        lscc/GetChaincodeData: /Channel/Application/Readers
+        lscc/GetInstantiatedChaincodes: /Channel/Application/Readers
+
+        qscc/GetChainInfo: /Channel/Application/Readers
+        qscc/GetBlockByNumber: /Channel/Application/Readers
+        qscc/GetBlockByHash: /Channel/Application/Readers
+        qscc/GetTransactionByID: /Channel/Application/Readers
+        qscc/GetBlockByTxID: /Channel/Application/Readers
+
+        cscc/GetConfigBlock: /Channel/Application/Readers
+        cscc/GetConfigTree: /Channel/Application/Readers
+        cscc/SimulateConfigTreeUpdate: /Channel/Application/Readers
+
+        peer/Propose: /Channel/Application/Writers
+        peer/ChaincodeToChaincode: /Channel/Application/Readers
+
+        event/Block: /Channel/Application/Readers
+        event/FilteredBlock: /Channel/Application/Readers
+
+    Organizations:
+
+    Policies: &ApplicationDefaultPolicies
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+################################################################################
+#
+#   ORDERER
+#
+################################################################################
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer.example.com:7050
+    BatchTimeout: 2s
+
+    BatchSize:
+        MaxMessageCount: 500
+        AbsoluteMaxBytes: 10 MB
+        PreferredMaxBytes: 2 MB
+
+    MaxChannels: 0
+
+    EtcdRaft:
+        Consenters:
+            - Host: orderer.example.com
+              Port: 7050
+              ClientTLSCert: ../orgs/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+              ServerTLSCert: ../orgs/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+
+
+        Options:
+            TickInterval: 500ms
+            ElectionTick: 10
+            HeartbeatTick: 1
+            MaxInflightBlocks: 5
+            SnapshotIntervalSize: 16 MB
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+    Capabilities:
+        <<: *OrdererCapabilities
+
+################################################################################
+#
+#   CHANNEL
+#
+################################################################################
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+################################################################################
+#
+#   PROFILES
+#
+################################################################################
+Profiles:
+    OrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+
+    Org1Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+            Capabilities:
+                <<: *ApplicationCapabilities
+    
+    Org2Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities
+    
+    Org12Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities
+                
