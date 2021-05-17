@@ -7,6 +7,7 @@
 - [x] [chaincode](./chaincode)
 - [x] [config](./config)
 - [x] [crypt](./crypt)
+- [x] [explorer](./explorer)
 - [x] [network](./network)
 - [x] [structures](./structures)
 
