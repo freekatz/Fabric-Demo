@@ -12,7 +12,7 @@ volumes:
 
 networks:
   test:
-    name: mol_test
+    name: net_test
 
 services:
 
@@ -92,7 +92,7 @@ services:
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=mol_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_test
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_TLS_ENABLED=true
@@ -156,7 +156,7 @@ services:
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=mol_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=net_test
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_PEER_TLS_ENABLED=true

@@ -1,0 +1,17 @@
+{
+	"network-configs": {
+		"channel1": {
+			"name": "Channel1",
+			"profile": "./connection-profile/channel1.json"
+		},
+		"channel2": {
+			"name": "Channel2",
+			"profile": "./connection-profile/channel2.json"
+		},
+		"channel12": {
+			"name": "Channel12",
+			"profile": "./connection-profile/channel12.json"
+		}
+	},
+	"license": "Apache-2.0"
+}
