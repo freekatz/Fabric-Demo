@@ -153,7 +153,7 @@ func (contract *SmartContract) MakeDigest(ctx contractapi.TransactionContextInte
 	_ = json.Unmarshal(patientAsBytes, patient)
 
 	// 计算密文和摘要
-	cryptoAsBytes := crypt.AesEncryptCBC([]byte(patient.IdentifyID), []byte(patient.HealthcareID))
+	cryptoAsBytes := crypt.AesEncryptCBC([]byte(patient.HealthcareID), []byte(patient.IdentifyID))
 	patientDigest := base64.StdEncoding.Strict().EncodeToString(cryptoAsBytes)
 
 	// 返回使用 hid 加密的 iid

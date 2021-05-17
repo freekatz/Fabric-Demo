@@ -28,7 +28,7 @@ type SmartContract struct {
 //
 
 //
-// 调用示例: '{"function":"register","Args":["ABCDEFGHIJKLMNOP","xxx"]}'
+// 调用示例: '{"function":"register","Args":["h1","xxx"]}'
 //
 func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
 	// todo 只能由 org2 调用
@@ -40,14 +40,14 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 }
 
 //
-// 调用示例: '{"function":"verify","Args":["ABCDEFGHIJKLMNOP","xxx"]}'
+// 调用示例: '{"function":"verify","Args":["h1","xxx"]}'
 //
 func (contract *SmartContract) Verify(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
 	// todo 只能由 org1 调用
 
 	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
 
-	if err != nil || len(digestAsBytes) == 0 {
+	if err != nil || digestAsBytes == nil || len(digestAsBytes) == 0 {
 		return fmt.Errorf("Verify failed: no such info. %s", err.Error())
 	}
 

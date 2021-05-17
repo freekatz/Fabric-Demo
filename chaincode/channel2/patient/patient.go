@@ -46,7 +46,7 @@ type DigestResult struct {
 //
 
 //
-// 调用示例: '{"function":"registerPatient","Args":["ABCDEFGHIJKLMNOP", "{\"name\": \"ZJH-1\", \"gender\": \"male\", \"birth\": \"1998-10-01\", \"identifyID\": \"xxxxxx-xxxx-19981001-xxxx-xxxx\", \"phoneNumber\": \"151-2300-0000\", \"address\": \"ChongQing\", \"nativePlace\": \"NeiMengGu\", \"creditCard\": \"6217-0000-0000-0000\"}"]}'
+// 调用示例: '{"function":"registerPatient","Args":["h1", "{\"name\": \"ZJH-1\", \"gender\": \"male\", \"birth\": \"1998-10-01\", \"identifyID\": \"ABCDEFGHIJKLMNOP\", \"phoneNumber\": \"151-2300-0000\", \"address\": \"ChongQing\", \"nativePlace\": \"NeiMengGu\", \"creditCard\": \"6217-0000-0000-0000\"}"]}'
 //
 func (contract *SmartContract) RegisterPatient(ctx contractapi.TransactionContextInterface, healthcareID string, patient Patient) error {
 	// todo 实现数据检查逻辑
@@ -56,7 +56,7 @@ func (contract *SmartContract) RegisterPatient(ctx contractapi.TransactionContex
 }
 
 //
-// 调用示例: '{"function":"updatePatient","Args":["ABCDEFGHIJKLMNOP", "[\"name\", \"gender\"]", "[\"ZJH-2\", \"female\"]"]}'
+// 调用示例: '{"function":"updatePatient","Args":["h1", "[\"name\", \"gender\"]", "[\"ZJH-2\", \"female\"]"]}'
 //
 func (contract *SmartContract) UpdatePatient(ctx contractapi.TransactionContextInterface, healthcareID string, fields []string, values []interface{}) error {
 	patient, err := contract.QueryPatient(ctx, healthcareID)
@@ -80,7 +80,7 @@ func (contract *SmartContract) UpdatePatient(ctx contractapi.TransactionContextI
 }
 
 //
-// 调用示例: '{"function":"queryPatient","Args":["ABCDEFGHIJKLMNOP"]}'
+// 调用示例: '{"function":"queryPatient","Args":["h1"]}'
 //
 func (contract *SmartContract) QueryPatient(ctx contractapi.TransactionContextInterface, healthcareID string) (*Patient, error) {
 	patientAsBytes, err := ctx.GetStub().GetState(healthcareID)
@@ -133,14 +133,14 @@ func (s *SmartContract) QueryAllPatients(ctx contractapi.TransactionContextInter
 }
 
 //
-// 调用示例: '{"function":"deletePatient","Args":["ABCDEFGHIJKLMNOP"]}'
+// 调用示例: '{"function":"deletePatient","Args":["h1"]}'
 //
 func (contract *SmartContract) DeletePatient(ctx contractapi.TransactionContextInterface, healthcareID string) error {
 	return ctx.GetStub().DelState(healthcareID)
 }
 
 //
-// 调用示例: '{"function":"makeDigest","Args":["ABCDEFGHIJKLMNOP"]}'
+// 调用示例: '{"function":"makeDigest","Args":["h1"]}'
 //
 func (contract *SmartContract) MakeDigest(ctx contractapi.TransactionContextInterface, healthcareID string) (*DigestResult, error) {
 	patientAsBytes, err := ctx.GetStub().GetState(healthcareID)
@@ -153,7 +153,7 @@ func (contract *SmartContract) MakeDigest(ctx contractapi.TransactionContextInte
 	_ = json.Unmarshal(patientAsBytes, patient)
 
 	// 计算密文和摘要
-	cryptoAsBytes := crypt.AesEncryptCBC([]byte(patient.IdentifyID), []byte(healthcareID))
+	cryptoAsBytes := crypt.AesEncryptCBC([]byte(healthcareID), []byte(patient.IdentifyID))
 	patientDigest := base64.StdEncoding.Strict().EncodeToString(cryptoAsBytes)
 
 	// 返回使用 hid 加密的 iid
