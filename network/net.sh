@@ -77,7 +77,8 @@ function networkUp() {
 
 function createChannel() {
     # Bring up the network if it is not already up.
-
+    export PATH=${PWD}/../config:$PATH
+    export FABRIC_CFG_PATH=${PWD}/configtx
     if [ ! -d "orgs/peerOrganizations" ]; then
         errorln "Have not up the network! Please first run the 'bash net.sh up'"
         exit
@@ -93,6 +94,8 @@ function createChannel() {
 
 ## Call the script to deploy a chaincode to the channel
 function deployCC() {
+    FABRIC_CFG_PATH=$PWD/../config/
+
     bash scripts/cc/deployCC.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE $CC_MODE
 
     if [ $? -ne 0 ]; then

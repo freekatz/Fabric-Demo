@@ -37,8 +37,8 @@ type QueryResult struct {
 }
 
 type DigestResult struct {
-	Key    string `json:"Key"`
-	Digest string `json: "digest"`
+	Key    string `json:"Key"` // h id
+	Digest string `json:"digest"`
 }
 
 //
@@ -154,8 +154,8 @@ func (contract *SmartContract) MakeDigest(ctx contractapi.TransactionContextInte
 
 	// 计算密文和摘要
 	cryptoAsBytes := crypt.AesEncryptCBC([]byte(patient.HealthcareID), []byte(patient.IdentifyID))
-	patientDigest := base64.StdEncoding.Strict().EncodeToString(cryptoAsBytes)
+	digest := base64.StdEncoding.Strict().EncodeToString(cryptoAsBytes)
 
 	// 返回使用 hid 加密的 iid
-	return &DigestResult{patient.HealthcareID, patientDigest}, nil
+	return &DigestResult{patient.HealthcareID, digest}, nil
 }

@@ -25,8 +25,8 @@ type QueryResult struct {
 }
 
 type DigestResult struct {
-	Key    string `json: "Key"`
-	Digest string `json: "digest"`
+	Key    string `json:"Key"` // h id
+	Digest string `json:"digest"`
 }
 
 func main() {
@@ -52,13 +52,13 @@ func main() {
 
 	patientContract := channel2.GetContract("patient")
 
-	hid := "abcdefghijklmnop"
+	hid := "h2"
 	patient := structures.NewPatientInHIB(
 		[]string{
 			"ZJH-2",
 			"female",
 			"1998-10-10",
-			"15323211",
+			"abcdefghijklmnop",
 			"139",
 			"CQ",
 			"NMG",

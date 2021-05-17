@@ -1,4 +1,4 @@
-module patientIdentify
+module gateway
 
 go 1.15
 

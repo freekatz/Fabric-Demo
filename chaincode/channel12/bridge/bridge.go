@@ -23,8 +23,13 @@ type SmartContract struct {
 	contractapi.Contract
 }
 
+type DigestResult struct {
+	Key    string `json:"Key"` // h id
+	Digest string `json:"digest"`
+}
+
 //
-// 提供的功能包括：登记、验证
+// 提供的功能包括：登记、更新、删除、验证
 //
 
 //
@@ -34,9 +39,52 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 	// todo 只能由 org2 调用
 	// todo 不允许重复插入
 
-	digestAsBytes := []byte(patientDigest)
+	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
+	if err == nil && digestAsBytes != nil && len(digestAsBytes) > 0 {
+		return fmt.Errorf("Info has been existed %s.", string(digestAsBytes))
+	}
+	digestAsBytes = []byte(patientDigest)
 
 	return ctx.GetStub().PutState(healthcareID, digestAsBytes)
+}
+
+//
+// 调用示例: '{"function":"update","Args":["h1","yyy"]}'
+//
+func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
+	// todo 只能由 org2 调用
+
+	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
+
+	if err != nil || digestAsBytes == nil || len(digestAsBytes) == 0 {
+		return err
+	}
+
+	digestAsBytes = []byte(patientDigest)
+	return ctx.GetStub().PutState(healthcareID, digestAsBytes)
+}
+
+//
+// 调用示例: '{"function":"query","Args":["h1"]}'
+//
+func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface, healthcareID string) (*DigestResult, error) {
+	// todo 只能由 org2 调用
+	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
+
+	if err != nil || digestAsBytes == nil || len(digestAsBytes) == 0 {
+		return nil, err
+	}
+
+	return &DigestResult{healthcareID, string(digestAsBytes)}, nil
+}
+
+//
+// 调用示例: '{"function":"delete","Args":["h1"]}'
+//
+func (contract *SmartContract) Delete(ctx contractapi.TransactionContextInterface, healthcareID string) error {
+	// todo 只能由 org2 调用
+
+	return ctx.GetStub().DelState(healthcareID)
 }
 
 //

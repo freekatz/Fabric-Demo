@@ -109,6 +109,9 @@ chaincodeInvokeTest() {
   infoln "登记病人医保信息"
   chaincodeInvoke '{"function":"register","Args":["h1","nBvJStd1vpV3K8nVpg4mLw=="]}' bridge
   sleep 5
+  infoln "查询病人医保信息"
+  chaincodeInvoke '{"function":"query","Args":["h1"]}' bridge
+  sleep 5
   infoln "验证病人医保信息"
   chaincodeInvoke '{"function":"verify","Args":["h1","nBvJStd1vpV3K8nVpg4mLw=="]}' bridge
 }

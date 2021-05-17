@@ -14,6 +14,6 @@ fi
 
 echo "DISCOVERY_AS_LOCALHOST="$DISCOVERY_AS_LOCALHOST
 
-echo "run patient identify..."
+echo "run patient gateway api test..."
 
-go run patientIdentify.go
+go run gateway.go

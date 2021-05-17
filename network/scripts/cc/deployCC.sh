@@ -2,8 +2,6 @@
 
 source scripts/utils.sh
 
-FABRIC_CFG_PATH=$PWD/../config/
-
 CHANNEL_NAME=${1:-"channel"}
 CHANNEL_ID=${2:-"1"}
 CC_NAME=${3}

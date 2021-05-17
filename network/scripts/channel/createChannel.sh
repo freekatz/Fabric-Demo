@@ -1,8 +1,5 @@
 #!/bin/bash
 
-export PATH=${PWD}/../config:$PATH
-export FABRIC_CFG_PATH=${PWD}/configtx
-
 CHANNEL_NAME="$1"
 : ${CHANNEL_NAME:="channel"}
 
