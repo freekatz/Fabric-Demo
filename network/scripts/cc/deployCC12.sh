@@ -107,10 +107,10 @@ chaincodeInvokeInit() {
 chaincodeInvokeTest() {
     ## !!! 输入参数在 shell 中不要有空格
   infoln "登记病人医保信息"
-  chaincodeInvoke '{"function":"register","Args":["ABCDEFGHIJKLMNOP","eZ2Tl2r50pkM1lEUgr7TmJe/hC3IOkM58EO67+rpCog="]}' bridge
+  chaincodeInvoke '{"function":"register","Args":["h1","nBvJStd1vpV3K8nVpg4mLw=="]}' bridge
   sleep 5
   infoln "验证病人医保信息"
-  chaincodeInvoke '{"function":"verify","Args":["ABCDEFGHIJKLMNOP","eZ2Tl2r50pkM1lEUgr7TmJe/hC3IOkM58EO67+rpCog="]}' bridge
+  chaincodeInvoke '{"function":"verify","Args":["h1","nBvJStd1vpV3K8nVpg4mLw=="]}' bridge
 }
 
 chaincodeInvoke() {

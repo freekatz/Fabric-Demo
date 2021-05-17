@@ -104,31 +104,31 @@ chaincodeInvokeInit() {
 chaincodeInvokeTest() {
   ## !!! 输入参数在 shell 中不要有空格
   # infoln "登记病人信息"
-  # chaincodeInvoke '{"function":"registerPatient","Args":["ABCDEFGHIJKLMNOP","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"xxxxxx-xxxx-19981001-xxxx-xxxx\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\"}"]}' patient
+  # chaincodeInvoke '{"function":"registerPatient","Args":["h1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\"}"]}' patient
   # sleep 5
   # infoln "查询登记结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  # chaincodeInvoke '{"function":"queryPatient","Args":["h1"]}' patient
   # sleep 5
   # infoln "更新病人信息（名字和性别）"
-  # chaincodeInvoke '{"function":"updatePatient","Args":["ABCDEFGHIJKLMNOP","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}' patient
+  # chaincodeInvoke '{"function":"updatePatient","Args":["h1","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}' patient
   # sleep 5
   # infoln "查询更新结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  # chaincodeInvoke '{"function":"queryPatient","Args":["h1"]}' patient
   # sleep 5
   # infoln "删除病人信息"
-  # chaincodeInvoke '{"function":"deletePatient","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  # chaincodeInvoke '{"function":"deletePatient","Args":["h1"]}' patient
   # sleep 5
   # infoln "查询删除结果"
-  # chaincodeInvoke '{"function":"queryPatient","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  # chaincodeInvoke '{"function":"queryPatient","Args":["h1"]}' patient
   # sleep 5
   infoln "再次登记病人信息"
-  chaincodeInvoke '{"function":"registerPatient","Args":["ABCDEFGHIJKLMNOP","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"xxxx-19981001-xxxx\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\"}"]}' patient
+  chaincodeInvoke '{"function":"registerPatient","Args":["h1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\"}"]}' patient
   sleep 5
   infoln "查询登记结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  chaincodeInvoke '{"function":"queryPatient","Args":["h1"]}' patient
   sleep 5
   infoln "获取病人医保信息"
-  chaincodeInvoke '{"function":"makeDigest","Args":["ABCDEFGHIJKLMNOP"]}' patient
+  chaincodeInvoke '{"function":"makeDigest","Args":["h1"]}' patient
 }
 
 chaincodeInvoke() {

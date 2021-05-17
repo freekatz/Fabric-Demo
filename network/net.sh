@@ -84,6 +84,11 @@ function createChannel() {
     fi
     
     bash scripts/channel/createChannel.sh $CHANNEL_NAME
+    infoln "Up the explorer"
+    local _p=$PWD
+    cd ../explorer
+    docker-compose up -d 
+    cd $_p
 }
 
 ## Call the script to deploy a chaincode to the channel
@@ -116,6 +121,12 @@ function networkDown() {
   rm -rf orgs/peerOrganizations
   rm -rf orgs/ordererOrganizations
   rm -rf ../chaincode/releases/*.tar.gz
+
+  infoln "Down the explorer"
+  local _p=$PWD
+  cd ../explorer
+  docker-compose down -v 
+  cd $_p
   res=$?
   { set +x; } 2>/dev/null
   cat log.txt
