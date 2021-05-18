@@ -14,8 +14,8 @@
 
 ## WIP
 
-- [] [api](./api)
+- [ ] [api](./api)
 
 ## TODO
 
-- [] [client](./client)
+- [ ] [client](./client)

@@ -83,10 +83,9 @@ func main() {
 
 	bridgeContract := channel12.GetContract("bridge")
 
-	result, err = bridgeContract.EvaluateTransaction("register", hid, digest.Digest)
+	result, err = bridgeContract.SubmitTransaction("register", hid, digest.Digest)
 	if err != nil {
 		fmt.Printf("Failed to evaluate transaction: %s\n", err)
 		os.Exit(1)
 	}
-	fmt.Println(string(result))
 }
