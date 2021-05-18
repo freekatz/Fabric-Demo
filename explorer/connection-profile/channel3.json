@@ -1,0 +1,48 @@
+{
+	"name": "channel3",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "admin",
+			"password": "2021"
+		},
+		"enableAuthentication": true,
+		"organization": "Org3MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"channel3": {
+			"peers": {
+				"peer0.org3.example.com": {}
+			}
+		}
+	},
+	"organizations": {
+		"Org3MSP": {
+			"mspid": "Org3MSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.org3.example.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.org3.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.org3.example.com:11051"
+		}
+	}
+}

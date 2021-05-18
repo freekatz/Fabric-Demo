@@ -76,7 +76,30 @@ Organizations:
             - Host: peer0.org2.example.com
               Port: 9051
 
+    - &Org3
+        Name: Org3
+        SkipAsForeign: false
+        ID: Org3MSP
+        MSPDir: ../orgs/peerOrganizations/org3.example.com/msp
+        Policies: &Org3Policies
+            Readers:
+                Type: Signature
+                Rule: "OR('Org3MSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Org3MSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Org3MSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Org3MSP.member')"
+        OrdererEndpoints:
+            - orderer.example.com:7050
 
+        AnchorPeers:
+            - Host: peer0.org3.example.com
+              Port: 11051
 
 ################################################################################
 #
@@ -234,6 +257,7 @@ Profiles:
                 Organizations:
                     - *Org1
                     - *Org2
+                    - *Org3
 
     Org1Channel:
         Consortium: SampleConsortium
@@ -254,6 +278,16 @@ Profiles:
                 - *Org2
             Capabilities:
                 <<: *ApplicationCapabilities
+
+    Org3Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities
     
     Org12Channel:
         Consortium: SampleConsortium
@@ -265,4 +299,15 @@ Profiles:
                 - *Org2
             Capabilities:
                 <<: *ApplicationCapabilities
-                
+
+    Org123Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities           

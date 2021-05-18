@@ -95,6 +95,7 @@ peer:
         bootstrap: 
             - peer0.org1.example.com:7051
             - peer0.org2.example.com:9051
+            - peer0.org3.example.com:11051
 
         # NOTE: orgLeader and useLeaderElection parameters are mutual exclusive.
         # Setting both to true would result in the termination of the peer

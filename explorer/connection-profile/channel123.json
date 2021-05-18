@@ -1,5 +1,5 @@
 {
-	"name": "channel12",
+	"name": "channel123",
 	"version": "1.0.0",
 	"client": {
 		"tlsEnable": true,
@@ -19,10 +19,11 @@
 		}
 	},
 	"channels": {
-		"channel12": {
+		"channel123": {
 			"peers": {
 				"peer0.org1.example.com": {},
-				"peer0.org2.example.com": {}
+				"peer0.org2.example.com": {},
+				"peer0.org3.example.com": {}
 			}
 		}
 	},
@@ -46,6 +47,16 @@
 			"signedCert": {
 				"path": "/tmp/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem"
 			}
+		},
+		"Org3MSP": {
+			"mspid": "Org3MSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.org3.example.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem"
+			}
 		}
 	},
 	"peers": {
@@ -60,6 +71,12 @@
 				"path": "/tmp/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
 			},
 			"url": "grpcs://peer0.org2.example.com:9051"
+		},
+		"peer0.org3.example.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.org3.example.com:11051"
 		}
 	}
 }

@@ -8,9 +8,17 @@
 			"name": "Channel2",
 			"profile": "./connection-profile/channel2.json"
 		},
+		"channel3": {
+			"name": "Channel3",
+			"profile": "./connection-profile/channel3.json"
+		},
 		"channel12": {
 			"name": "Channel12",
 			"profile": "./connection-profile/channel12.json"
+		},
+		"channel123": {
+			"name": "Channel123",
+			"profile": "./connection-profile/channel123.json"
 		}
 	},
 	"license": "Apache-2.0"

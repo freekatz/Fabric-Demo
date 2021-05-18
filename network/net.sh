@@ -46,6 +46,7 @@ function createOrgs() {
 
     genCrypto org1
     genCrypto org2
+    genCrypto org3
     genCrypto orderer
 
     infoln "Generating CCP files for Orgs"

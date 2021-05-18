@@ -63,7 +63,7 @@ Organizations:
         # OrdererEndpoints is a list of all orderers this org runs which clients
         # and peers may to connect to to push transactions and receive blocks respectively.
         OrdererEndpoints:
-            - "127.0.0.1:6050"
+            - "127.0.0.1:7050"
 
         # AnchorPeers defines the location of peers which can be used for
         # cross-org gossip communication. Note, this value is only encoded in
@@ -266,7 +266,7 @@ Orderer: &OrdererDefaults
     # as TLS validation.  The preferred way to specify orderer addresses is now
     # to include the OrdererEndpoints item in your org definition
     Addresses:
-        # - 127.0.0.1:6050
+        # - 127.0.0.1:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch.
     BatchTimeout: 2s
@@ -327,15 +327,15 @@ Orderer: &OrdererDefaults
         # replicated under the Orderer.Addresses key above.
         Consenters:
             - Host: raft0.example.com
-              Port: 6050
+              Port: 7050
               ClientTLSCert: path/to/ClientTLSCert0
               ServerTLSCert: path/to/ServerTLSCert0
             - Host: raft1.example.com
-              Port: 6050
+              Port: 7050
               ClientTLSCert: path/to/ClientTLSCert1
               ServerTLSCert: path/to/ServerTLSCert1
             - Host: raft2.example.com
-              Port: 6050
+              Port: 7050
               ClientTLSCert: path/to/ClientTLSCert2
               ServerTLSCert: path/to/ServerTLSCert2
 
