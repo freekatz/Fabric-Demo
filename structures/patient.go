@@ -10,17 +10,17 @@ type GenderType string
 const (
 	Male       GenderType = "male"   // 男性
 	Female     GenderType = "female" // 女性
-	NoneGender GenderType = ""
+	NoneGenderType GenderType = ""
 )
 
-func getGender(genderStr string) (GenderType, error) {
-	switch genderStr {
+func getGenderType(genderTypeStr string) (GenderType, error) {
+	switch genderTypeStr {
 	case "male":
 		return Male, nil
 	case "female":
 		return Female, nil
 	default:
-		return NoneGender, fmt.Errorf("No gender type named %s error.", genderStr)
+		return NoneGenderType, fmt.Errorf("No gender type named %s error.", genderTypeStr)
 	}
 }
 
@@ -40,7 +40,7 @@ func (p *Patient) UpdatePatientField(field string, value interface{}) error {
 	case "name":
 		p.Name = value.(string)
 	case "gender":
-		genderType, err := getGender(value.(string))
+		genderType, err := getGenderType(value.(string))
 		if err != nil {
 			return err
 		}
@@ -58,7 +58,7 @@ func (p *Patient) UpdatePatientField(field string, value interface{}) error {
 	case "creditCard":
 		p.CreditCard = value.(string)
 	default:
-		return fmt.Errorf("No field named %s error.", value.(string))
+		return fmt.Errorf("No field named %s error.", field)
 	}
 	return nil
 }
@@ -74,7 +74,7 @@ type PatientInHIB struct {
 }
 
 func NewPatientInHOS(values []string) PatientInHOS {
-	genderType, _ := getGender(values[1])
+	genderType, _ := getGenderType(values[1])
 	return PatientInHOS{
 		Patient: Patient{
 			Name:        values[0],
@@ -96,7 +96,7 @@ func (p *PatientInHOS) String() string {
 }
 
 func NewPatientInHIB(values []string) PatientInHIB {
-	genderType, _ := getGender(values[1])
+	genderType, _ := getGenderType(values[1])
 	return PatientInHIB{
 		Patient: Patient{
 			Name:        values[0],
