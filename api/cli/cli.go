@@ -1,4 +1,4 @@
-package ci
+package cli
 
 import (
 	"errors"
@@ -26,7 +26,7 @@ type Chaincode struct {
 }
 
 // 用于连接 Fabric 网络的参数
-type CIParams struct {
+type CliParams struct {
 	BasePath string
 	OrgMSP   string
 	OrgHost  string
@@ -62,7 +62,7 @@ func SetEnv(sw string) {
 	os.Setenv("DISCOVERY_AS_LOCALHOST", sw)
 }
 
-func SetParams(params *CIParams) {
+func SetParams(params *CliParams) {
 	basePath = params.BasePath
 	orgMSP = params.OrgMSP
 	orgHost = params.OrgHost
@@ -185,3 +185,23 @@ func (chaincode *Chaincode) InvokeContract(params *InvokeParams, rw bool) (resul
 
 	return result, nil
 }
+
+//
+// todo
+//
+/*
+CreatePeer
+PeerJoinChannel
+DeletePeer
+
+CreateChannel
+OrgJoinChannel
+QuitChannel
+DeleteChannel
+
+PackageCC
+InstallCC
+ApproveCC
+CommitCC
+UpgradeCC
+*/

@@ -12,7 +12,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/1uvu/Fabric-Demo/api/ci"
+	"github.com/1uvu/Fabric-Demo/api/cli"
 	"github.com/1uvu/Fabric-Demo/structures"
 )
 
@@ -32,7 +32,7 @@ type DigestResult struct {
 
 func main() {
 	// test()
-	ci.SetEnv("true")
+	cli.SetEnv("true")
 	basePath := filepath.Join(
 		"..",
 		"..",
@@ -40,20 +40,20 @@ func main() {
 		"orgs",
 		"peerOrganizations",
 	)
-	ci.SetParams(&ci.CIParams{
+	cli.SetParams(&cli.CliParams{
 		basePath,
 		"Org1MSP",
 		"org1.example.com",
 		"connection-org1.yaml",
 		"User1",
 	})
-	channel1, err := ci.GetChannel("channel1")
+	channel1, err := cli.GetChannel("channel1")
 	if err != nil {
 		fmt.Printf("Failed to get channel: %s\n", err)
 		os.Exit(1)
 	}
 
-	channel12, err := ci.GetChannel("channel12")
+	channel12, err := cli.GetChannel("channel12")
 	if err != nil {
 		fmt.Printf("Failed to get channel: %s\n", err)
 		os.Exit(1)
@@ -75,13 +75,13 @@ func main() {
 			"h3",
 		},
 	)
-	result, err := patientChaincode.InvokeContract(&ci.InvokeParams{"registerPatient", []string{pid, patient.String()}}, true)
+	result, err := patientChaincode.InvokeContract(&cli.InvokeParams{"registerPatient", []string{pid, patient.String()}}, true)
 	if err != nil {
 		fmt.Printf("Failed to submit transaction: %s\n", err)
 		os.Exit(1)
 	}
 	fmt.Println(string(result))
-	result, err = patientChaincode.InvokeContract(&ci.InvokeParams{"makeDigest", []string{pid}}, false)
+	result, err = patientChaincode.InvokeContract(&cli.InvokeParams{"makeDigest", []string{pid}}, false)
 	if err != nil {
 		fmt.Printf("Failed to evaluate transaction: %s\n", err)
 		os.Exit(1)
@@ -92,13 +92,13 @@ func main() {
 
 	bridgeChaincode := channel12.GetChaincode("bridge")
 
-	_, err = bridgeChaincode.InvokeContract(&ci.InvokeParams{"register", []string{patient.HealthcareID, digest.Digest}}, true)
+	_, err = bridgeChaincode.InvokeContract(&cli.InvokeParams{"register", []string{patient.HealthcareID, digest.Digest}}, true)
 	if err != nil {
 		fmt.Printf("Failed to evaluate transaction: %s\n", err)
 		os.Exit(1)
 	}
 
-	_, err = bridgeChaincode.InvokeContract(&ci.InvokeParams{"verify", []string{patient.HealthcareID, digest.Digest}}, false)
+	_, err = bridgeChaincode.InvokeContract(&cli.InvokeParams{"verify", []string{patient.HealthcareID, digest.Digest}}, false)
 	if err != nil {
 		fmt.Printf("Failed to evaluate transaction: %s\n", err)
 		os.Exit(1)
