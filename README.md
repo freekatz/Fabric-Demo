@@ -1,6 +1,7 @@
 # Fabric-Demo
 
 Fabric 数据存储、共享和溯源 Demo
+
 **不允许任何二次修改、传播，禁止用于商业、竞赛等用途，请尊重开源，谢谢合作。**
 
 ## Archived
@@ -16,6 +17,7 @@ Fabric 数据存储、共享和溯源 Demo
 - [ ] [api](./api)
   - [x] [api/ci](./api/ci) 
   - [x] [api/ci_test](./api/ci_test) 
+  - [ ] [api/gateway](./api/gateway)
 
 ## TODO
 
