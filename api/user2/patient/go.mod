@@ -1,4 +1,4 @@
-module gateway
+module patient
 
 go 1.15
 

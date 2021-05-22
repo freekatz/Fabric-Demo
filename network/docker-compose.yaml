@@ -19,7 +19,7 @@ services:
 
   orderer.example.com:
     container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:2.2.1
+    image: hyperledger/fabric-orderer:2.2.3
     labels:
       service: hyperledger-fabric
     environment:
@@ -77,7 +77,7 @@ services:
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer:2.2.1
+    image: hyperledger/fabric-peer:2.2.3
     labels:
       service: hyperledger-fabric
     environment:
@@ -141,7 +141,7 @@ services:
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
-    image: hyperledger/fabric-peer:2.2.1
+    image: hyperledger/fabric-peer:2.2.3
     labels:
       service: hyperledger-fabric
     environment:
@@ -205,7 +205,7 @@ services:
 
   peer0.org3.example.com:
     container_name: peer0.org3.example.com
-    image: hyperledger/fabric-peer:2.2.1
+    image: hyperledger/fabric-peer:2.2.3
     labels:
       service: hyperledger-fabric
     environment:
@@ -319,7 +319,7 @@ services:
   cli10:
     # 如何指定控制的是哪一个节点？https://hyperledger-fabric.readthedocs.io/zh_CN/release-2.2/test_network.html#与网络交互
     container_name: cli10
-    image: hyperledger/fabric-tools:2.2.1
+    image: hyperledger/fabric-tools:2.2.3
     labels:
       service: hyperledger-fabric
     tty: true
@@ -350,7 +350,7 @@ services:
 
   cli20:
     container_name: cli20
-    image: hyperledger/fabric-tools:2.2.1
+    image: hyperledger/fabric-tools:2.2.3
     labels:
       service: hyperledger-fabric
     tty: true
@@ -381,7 +381,7 @@ services:
 
   cli30:
     container_name: cli30
-    image: hyperledger/fabric-tools:2.2.1
+    image: hyperledger/fabric-tools:2.2.3
     labels:
       service: hyperledger-fabric
     tty: true

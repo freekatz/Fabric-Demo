@@ -16,7 +16,7 @@ General:
     ListenAddress: 127.0.0.1
 
     # Listen port: The port on which to bind to listen.
-    ListenPort: 6050
+    ListenPort: 7050
 
     # TLS: TLS settings for the GRPC server.
     TLS:
