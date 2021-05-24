@@ -1,4 +1,4 @@
-module client
+module admin
 
 go 1.15
 

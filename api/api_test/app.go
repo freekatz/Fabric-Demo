@@ -9,11 +9,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
-	"github.com/1uvu/Fabric-Demo/api/client"
+	"github.com/1uvu/Fabric-Demo/api/admin"
+	"github.com/1uvu/Fabric-Demo/api/app"
 	"github.com/1uvu/Fabric-Demo/structures"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 )
 
 type GenderType = structures.GenderType
@@ -58,7 +61,7 @@ func main() {
 func testApp() {
 	fmt.Println("testing app client")
 
-	client.SetEnv("true")
+	app.SetEnv("true")
 
 	credPath := filepath.Join(
 		basePath,
@@ -73,32 +76,30 @@ func testApp() {
 		"signcerts",
 		fmt.Sprintf("%s@%s-cert.pem", orgUser, orgHost),
 	)
-	appConfigPath := filepath.Join(
+	configPath := filepath.Join(
 		basePath,
 		"app",
 		appConfigName,
 	)
-	adminConfigPath := ""
-	params := client.ClientParams{
-		CredPath:        credPath,
-		CertPath:        certPath,
-		AppConfigPath:   appConfigPath,
-		AdminConfigPath: adminConfigPath,
-		OrgMSP:          orgMSP,
-		OrgName:         orgName,
-		OrgAdmin:        orgAdmin,
-		OrgUser:         orgUser,
-		OrgHost:         orgHost,
+	params := app.ClientParams{
+		CredPath:   credPath,
+		CertPath:   certPath,
+		ConfigPath: configPath,
+		OrgMSP:     orgMSP,
+		OrgName:    orgName,
+		OrgAdmin:   orgAdmin,
+		OrgUser:    orgUser,
+		OrgHost:    orgHost,
 	}
-	client.SetParams(&params)
+	app.SetParams(&params)
 
-	app1, err := client.GetAppClient("channel1")
+	app1, err := app.GetAppClient("channel1")
 	if err != nil {
 		fmt.Printf("Failed to get app client: %s\n", err)
 		os.Exit(1)
 	}
 
-	app12, err := client.GetAppClient("channel12")
+	app12, err := app.GetAppClient("channel12")
 	if err != nil {
 		fmt.Printf("Failed to get app client: %s\n", err)
 		os.Exit(1)
@@ -155,7 +156,7 @@ func testApp() {
 func testAdmin() {
 	fmt.Println("testing admin client")
 
-	client.SetEnv("true")
+	admin.SetEnv("true")
 
 	credPath := filepath.Join(
 		basePath,
@@ -170,35 +171,83 @@ func testAdmin() {
 		"signcerts",
 		fmt.Sprintf("%s@%s-cert.pem", orgUser, orgHost),
 	)
-	appConfigPath := ""
-	adminConfigPath := filepath.Join(
+	configPath := filepath.Join(
 		basePath,
 		"admin",
 		adminConfigName,
 	)
-	params := client.ClientParams{
-		CredPath:        credPath,
-		CertPath:        certPath,
-		AppConfigPath:   appConfigPath,
-		AdminConfigPath: adminConfigPath,
-		OrgMSP:          orgMSP,
-		OrgName:         orgName,
-		OrgAdmin:        orgAdmin,
-		OrgUser:         orgUser,
-		OrgHost:         orgHost,
+	params := admin.ClientParams{
+		CredPath:   credPath,
+		CertPath:   certPath,
+		ConfigPath: configPath,
+		OrgMSP:     orgMSP,
+		OrgName:    orgName,
+		OrgAdmin:   orgAdmin,
+		OrgUser:    orgUser,
+		OrgHost:    orgHost,
 	}
-	client.SetParams(&params)
+	admin.SetParams(&params)
 
-	admin, err := client.GetAdminClient()
+	admin1, err := admin.GetAdminClient()
 
 	if err != nil {
-		fmt.Printf("Failed to get admin client: %s\n", err)
+		fmt.Printf("Failed to get admin1 client: %s\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println(admin)
+	app123, _ := admin1.GetAppClient("channel123")
 
-	admin.InitAppClient("channel123")
+	// 写账本
+	// new channel request for invoke
+	args := [][]byte{[]byte("t10")}
+	req := channel.Request{
+		ChaincodeID: "trace",
+		Fcn:         "register",
+		Args:        args,
+	}
 
-	fmt.Println(admin)
+	// send request and handle response
+	// peers is needed
+	reqPeers := channel.WithTargetEndpoints(
+		"peer0.org1.example.com",
+		"peer0.org2.example.com",
+		"peer0.org3.example.com",
+	)
+	// 可不指定 peers 使用默认，如需指定则需要符合 chaincode 的背书策略
+	resp, err := app123.CC.Execute(req, reqPeers)
+	if err != nil {
+		fmt.Println(err)
+	}
+	log.Printf("invoke chaincode tx: %s", resp.TransactionID)
+
+	// 读账本
+	args = [][]byte{[]byte("t1")}
+	req = channel.Request{
+		ChaincodeID: "trace",
+		Fcn:         "query",
+		Args:        args,
+	}
+	resp, err = app123.CC.Query(req)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	log.Printf("invoke chaincode tx: %s", resp.TransactionID)
+	log.Printf("resp content %s", string(resp.Payload))
+
+	// 获取其他通道的 app client
+	app1, _ := admin1.GetAppClient("channel1")
+	args = [][]byte{[]byte("p1")}
+	req = channel.Request{
+		ChaincodeID: "patient",
+		Fcn:         "queryPatient",
+		Args:        args,
+	}
+	resp, err = app1.CC.Query(req)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	log.Printf("invoke chaincode tx: %s", resp.TransactionID)
+	log.Printf("resp content %s", string(resp.Payload))
 }

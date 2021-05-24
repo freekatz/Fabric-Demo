@@ -25,8 +25,14 @@ type Network struct {
 
 使用 ccp config 生成 wallet，实现 cc 的功能（推荐）。
 
-因此，这里选用第二种方式来获取 cc。
+因此，这里推荐：
+- 对于管理员客户端使用第一种方式来获取 cc。
+- 对于普通用户应用，选用第二种方式来获取 cc。
+
+所以，这里全部提供了
 
 为了使用方便，这里将 cc 和 ec 封装为 AppClient，而另外 rc 和 mc 封装为 AdminClient。
 
-如果想要使用 cc，ec 和 lc，则可以通过 admin client 的 sdk 成员十分简便地调用 admin.InitAppClient 实例化得到
+如果想要使用 cc，ec 和 lc，则可以通过 admin client 的 sdk 成员十分简便地调用 admin.InitAppClient 实例化得到。
+
+而且，并没有进行过多的封装，只是简化了实例化各种客户端的操作，扩展性更强。

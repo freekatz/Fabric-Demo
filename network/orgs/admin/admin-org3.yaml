@@ -324,20 +324,21 @@ entityMatchers:
   # 在 hosts 中写入
   # 127.0.0.1 peer0.org1.example.com                      
   # 127.0.0.1 peer0.org2.example.com
-  # 127.0.0.1 peer0.org3.example.com   
+  # 127.0.0.1 peer0.org3.example.com  
+  # 127.0.0.1 orderer.example.com 
   peer:
     - pattern: (\w+).org1.example.(\w+):(\d+)
-      urlSubstitutionExp: grpcs://${1}.org1.example.com:${2}
+      urlSubstitutionExp: grpcs://${1}.org1.example.${2}:${3}
       sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
       mappedHost: peer0.org1.example.com
 
     - pattern: (\w+).org2.example.(\w+):(\d+)
-      urlSubstitutionExp: grpcs://${1}.org2.example.com:${2}
+      urlSubstitutionExp: grpcs://${1}.org2.example.${2}:${3}
       sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
       mappedHost: peer0.org2.example.com
 
     - pattern: (\w+).org3.example.(\w+):(\d+)
-      urlSubstitutionExp: grpcs://${1}.org3.example.com:${2}
+      urlSubstitutionExp: grpcs://${1}.org3.example.${2}:${3}
       sslTargetOverrideUrlSubstitutionExp: peer0.org3.example.com
       mappedHost: peer0.org3.example.com
 
