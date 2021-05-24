@@ -29,9 +29,9 @@ client:
 
     client:
       key:
-        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
+        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
       cert:
-        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
+        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
 channels:
 
@@ -236,9 +236,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -250,9 +250,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -266,9 +266,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -280,9 +280,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -296,9 +296,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -310,9 +310,9 @@ certificateAuthorities:
       path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.key
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.crt
+          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin3
@@ -341,7 +341,67 @@ entityMatchers:
       urlSubstitutionExp: grpcs://${1}.org3.example.${2}:${3}
       sslTargetOverrideUrlSubstitutionExp: peer0.org3.example.com
       mappedHost: peer0.org3.example.com
+    ###
+    - pattern: (\w+).org1.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org1.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+      mappedHost: peer0.org1.example.com
 
+    - pattern: (\w+).org2.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org2.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.example.com
+      mappedHost: peer0.org2.example.com
+
+    - pattern: (\w+).org3.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org3.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org3.example.com
+      mappedHost: peer0.org3.example.com
+    ###
+    - pattern: (\w+).org1.example.(\w+)
+      urlSubstitutionExp: peer0.org1.example.com:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).org2.example.(\w+)
+      urlSubstitutionExp: peer0.org2.example.com:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
+      mappedHost: peer0.org2.example.com
+
+    - pattern: (\w+).org3.example.(\w+)
+      urlSubstitutionExp: peer0.org3.example.com:11051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org3.example.com
+      mappedHost: peer0.org3.example.com
+    ###
+    - pattern: (\w+).example1.(\w+):(\d+)
+      urlSubstitutionExp: ${1}.org1.example.${2}:${3}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.${2}
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).example2.(\w+):(\d+)
+      urlSubstitutionExp: ${1}.org2.example.${2}:${3}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.example.${2}
+      mappedHost: peer0.org2.example.com
+
+    - pattern: (\w+).example3.(\w+):(\d+)
+      urlSubstitutionExp: ${1}.org3.example.${2}:${3}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org3.example.${2}
+      mappedHost: peer0.org3.example.com
+
+    ###
+    - pattern: (\w+).org1.example.(\w+):(\d+)
+      urlSubstitutionExp: peer0.org1.example.com:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).org2.example.(\w+):(\d+)
+      urlSubstitutionExp: peer0.org2.example.com:9051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
+      mappedHost: peer0.org2.example.com
+
+    - pattern: (\w+).org3.example.(\w+):(\d+)
+      urlSubstitutionExp: peer0.org3.example.com:11051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org3.example.com
+      mappedHost: peer0.org3.example.com
   # 实际环境下，可能每个组织都有其各种的 orderer，需对应修改
   orderer:
     - pattern: (\w+).example.(\w+)

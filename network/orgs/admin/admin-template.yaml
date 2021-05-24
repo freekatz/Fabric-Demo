@@ -2,7 +2,7 @@
 # 需要设置的环境变量
 # ${CRYPTO_CONFIG_BASE_PATH}，如：/home/fabric/Project/Fabric-Demo/network/orgs
 # ${ORG}，如：1
-# ${USERNAME}，如：User1
+# ${USERNAME}，如：Admin
 
 version: 1.0.0
 client:
@@ -247,9 +247,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -261,9 +261,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -277,9 +277,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -291,9 +291,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/User1@org2.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -307,9 +307,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -321,9 +321,9 @@ certificateAuthorities:
       path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin3

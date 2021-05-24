@@ -14,6 +14,6 @@ fi
 
 echo "DISCOVERY_AS_LOCALHOST="$DISCOVERY_AS_LOCALHOST
 
-echo "run sdk test app..."
+echo "run sdk app client test..."
 
-go run app.go
+go run main.go

@@ -2,7 +2,7 @@
 
 . scripts/utils.sh
 
-errorln "Please do not exec this script directly, and use cat build_net.sh to copy/paste the commands."
+errorln "Please copy/paste and exec the commands manually."
 
 infoln "bash net.sh up"
 

@@ -97,9 +97,11 @@ func GetAdminClient() (*AdminClient, error) {
 func (admin *AdminClient) GetAppClient(channelID string) (*AppClient, error) {
 
 	if app, ok := admin.acs[channelID]; ok {
+		log.Printf("app client of %s has existed, return directly.", channelID)
 		return app, nil
 	}
 
+	log.Printf("app client of %s do not existed, get it now.", channelID)
 	// 这里是 admin 端的 channel client，因此为其指定 admin 用户
 	// ccp := admin.SDK.ChannelContext(channelID, fabsdk.WithUser(admin.OrgUser))
 	ccp := admin.SDK.ChannelContext(channelID, fabsdk.WithUser(admin.OrgAdmin), fabsdk.WithUser(admin.OrgUser))

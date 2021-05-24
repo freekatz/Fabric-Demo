@@ -1,4 +1,4 @@
-module api_test
+module admin_test
 
 go 1.15
 

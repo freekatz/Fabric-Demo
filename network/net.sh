@@ -49,9 +49,9 @@ function createOrgs() {
     genCrypto org3
     genCrypto orderer
 
-    infoln "Generating CCP files for Orgs"
+    infoln "Generating APP files for Orgs"
     infoln "Please add extra peers config manually"
-    bash orgs/ccp/ccp-generate.sh
+    bash orgs/app/app-generate.sh
 }
 
 
