@@ -15,8 +15,8 @@ Fabric 数据存储、共享和溯源 Demo
 ## WIP
 
 - [ ] [api](./api)
-  - [ ] [api/cli](./api/cli) 
-  - [ ] [api/cli_test](./api/cli_test) 
+  - [x] [api/app](./api/app) 
+  - [x] [api/admin](./api/admin) 
   - [ ] [api/gateway](./api/gateway)
 
 ## TODO
