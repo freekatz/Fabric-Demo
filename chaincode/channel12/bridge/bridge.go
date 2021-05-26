@@ -36,8 +36,10 @@ type DigestResult struct {
 // 调用示例: '{"function":"register","Args":["h1","xxx"]}'
 //
 func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
-	// todo 只能由 org2 调用
-	// todo 不允许重复插入
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org2MSP" {
+		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
 
 	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
 	if err == nil && digestAsBytes != nil && len(digestAsBytes) > 0 {
@@ -52,7 +54,10 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 // 调用示例: '{"function":"update","Args":["h1","yyy"]}'
 //
 func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
-	// todo 只能由 org2 调用
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org2MSP" {
+		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
 
 	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
 
@@ -68,7 +73,11 @@ func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterfac
 // 调用示例: '{"function":"query","Args":["h1"]}'
 //
 func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface, healthcareID string) (*DigestResult, error) {
-	// todo 只能由 org2 调用
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org2MSP" {
+		return nil, fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
+
 	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
 
 	if err != nil || digestAsBytes == nil || len(digestAsBytes) == 0 {
@@ -82,7 +91,10 @@ func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface
 // 调用示例: '{"function":"delete","Args":["h1"]}'
 //
 func (contract *SmartContract) Delete(ctx contractapi.TransactionContextInterface, healthcareID string) error {
-	// todo 只能由 org2 调用
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org2MSP" {
+		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
 
 	return ctx.GetStub().DelState(healthcareID)
 }
@@ -91,7 +103,10 @@ func (contract *SmartContract) Delete(ctx contractapi.TransactionContextInterfac
 // 调用示例: '{"function":"verify","Args":["h1","xxx"]}'
 //
 func (contract *SmartContract) Verify(ctx contractapi.TransactionContextInterface, healthcareID, patientDigest string) error {
-	// todo 只能由 org1 调用
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org1MSP" {
+		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
 
 	digestAsBytes, err := ctx.GetStub().GetState(healthcareID)
 

@@ -46,9 +46,9 @@ type DigestResult struct {
 //
 
 //
-// 调用示例: '{"function":"registerPatient","Args":["h1", "{\"name\": \"ZJH-1\", \"gender\": \"male\", \"birth\": \"1998-10-01\", \"identifyID\": \"ABCDEFGHIJKLMNOP\", \"phoneNumber\": \"151-2300-0000\", \"address\": \"ChongQing\", \"nativePlace\": \"NeiMengGu\", \"creditCard\": \"6217-0000-0000-0000\"}"]}'
+// 调用示例: '{"function":"register","Args":["h1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\"}"]}'
 //
-func (contract *SmartContract) RegisterPatient(ctx contractapi.TransactionContextInterface, healthcareID string, patient Patient) error {
+func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterface, healthcareID string, patient Patient) error {
 	// todo 实现数据检查逻辑
 	patientAsBytes, _ := json.Marshal(patient)
 
@@ -56,10 +56,10 @@ func (contract *SmartContract) RegisterPatient(ctx contractapi.TransactionContex
 }
 
 //
-// 调用示例: '{"function":"updatePatient","Args":["h1", "[\"name\", \"gender\"]", "[\"ZJH-2\", \"female\"]"]}'
+// 调用示例: '{"function":"update","Args":["h1","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}'
 //
-func (contract *SmartContract) UpdatePatient(ctx contractapi.TransactionContextInterface, healthcareID string, fields []string, values []interface{}) error {
-	patient, err := contract.QueryPatient(ctx, healthcareID)
+func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterface, healthcareID string, fields []string, values []interface{}) error {
+	patient, err := contract.Query(ctx, healthcareID)
 
 	if err != nil {
 		return err
@@ -80,9 +80,9 @@ func (contract *SmartContract) UpdatePatient(ctx contractapi.TransactionContextI
 }
 
 //
-// 调用示例: '{"function":"queryPatient","Args":["h1"]}'
+// 调用示例: '{"function":"query","Args":["h1"]}'
 //
-func (contract *SmartContract) QueryPatient(ctx contractapi.TransactionContextInterface, healthcareID string) (*Patient, error) {
+func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface, healthcareID string) (*Patient, error) {
 	patientAsBytes, err := ctx.GetStub().GetState(healthcareID)
 
 	if err != nil {
@@ -100,9 +100,9 @@ func (contract *SmartContract) QueryPatient(ctx contractapi.TransactionContextIn
 }
 
 //
-// 调用示例: '{"function":"queryAllPatients","Args":[]}'
+// 调用示例: '{"function":"queryAll","Args":[]}'
 // QueryAllCars returns all patients found in world state
-func (s *SmartContract) QueryAllPatients(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
+func (s *SmartContract) QueryAll(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
 	startKey := ""
 	endKey := ""
 
@@ -133,9 +133,9 @@ func (s *SmartContract) QueryAllPatients(ctx contractapi.TransactionContextInter
 }
 
 //
-// 调用示例: '{"function":"deletePatient","Args":["h1"]}'
+// 调用示例: '{"function":"delete","Args":["h1"]}'
 //
-func (contract *SmartContract) DeletePatient(ctx contractapi.TransactionContextInterface, healthcareID string) error {
+func (contract *SmartContract) Delete(ctx contractapi.TransactionContextInterface, healthcareID string) error {
 	return ctx.GetStub().DelState(healthcareID)
 }
 

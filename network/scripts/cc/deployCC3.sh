@@ -103,6 +103,29 @@ chaincodeInvokeInit() {
 
 chaincodeInvokeTest() {
   ## !!! 输入参数在 shell 中不要有空格
+  infoln "登记文件信息"
+  chaincodeInvoke '{"function":"register","Args":["f1","{\"recordDate\":\"2021-05-26-15-30-00\",\"ipfsAddress\":\"ipfs@localhost@1234/f1\",\"fingerprint\":\"xsxsxsxsxsxs\"}"]}' file
+  sleep 5
+  infoln "查询登记结果"
+  chaincodeInvoke '{"function":"query","Args":["f1"]}' file
+  sleep 5
+  infoln "更新文件信息（IPFS Address）"
+  chaincodeInvoke '{"function":"update","Args":["f1","ipfsAddress","ipfs@localhost@6666/f1"]}' file
+  sleep 5
+  infoln "查询更新结果"
+  chaincodeInvoke '{"function":"query","Args":["f1"]}' file
+  sleep 5
+  infoln "删除文件信息"
+  chaincodeInvoke '{"function":"delete","Args":["f1"]}' file
+  sleep 5
+  infoln "查询删除结果"
+  chaincodeInvoke '{"function":"query","Args":["f1"]}' file
+  sleep 5
+  infoln "再次登记文件信息"
+  chaincodeInvoke '{"function":"register","Args":["f1","{\"recordDate\":\"2021-05-26-15-30-00\",\"ipfsAddress\":\"ipfs@localhost@1234/f1\",\"fingerprint\":\"xsxsxsxsxsxs\"}"]}' file
+  sleep 5
+  infoln "查询登记结果"
+  chaincodeInvoke '{"function":"query","Args":["f1"]}' file
 }
 
 chaincodeInvoke() {

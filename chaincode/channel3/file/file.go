@@ -32,6 +32,9 @@ type QueryResult struct {
 	Record *FileRecord
 }
 
+//
+// 调用示例: '{"function":"register","Args":["f1","{\"recordDate\":\"2021-05-26-15-25-00\",\"ipfsAddress\":\"ipfs@localhost@1234/f1\",\"fingerprint\":\"xsxsxsxsxsxs\"}"]}'
+//
 func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterface, fileRecordID string, fileRecord FileRecord) error {
 	// todo 实现数据检查逻辑
 	recordAsBytes, _ := json.Marshal(fileRecord)
@@ -39,6 +42,9 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 	return ctx.GetStub().PutState(fileRecordID, recordAsBytes)
 }
 
+//
+// 调用示例: '{"function":"update","Args":["f1","ipfsAddress","ipfs@localhost@6666/f1"]}'
+//
 func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterface, fileRecordID string, field string, value string) error {
 	record, err := contract.Query(ctx, fileRecordID)
 
@@ -53,6 +59,9 @@ func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterfac
 	return ctx.GetStub().PutState(fileRecordID, recordAsBytes)
 }
 
+//
+// 调用示例: '{"function":"query","Args":["f1"]}'
+//
 func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface, fileRecordID string) (*FileRecord, error) {
 	recordAsBytes, err := ctx.GetStub().GetState(fileRecordID)
 
@@ -63,13 +72,16 @@ func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface
 	record := new(FileRecord)
 	_ = json.Unmarshal(recordAsBytes, record)
 
-	if record.Timestamp == "" {
+	if record.RecordDate == "" {
 		return nil, fmt.Errorf("There no file in ledger with file record id: %s", fileRecordID)
 	}
 
 	return record, nil
 }
 
+//
+// 调用示例: '{"function":"queryAll","Args":[]}'
+//
 func (s *SmartContract) QueryAll(ctx contractapi.TransactionContextInterface) ([]QueryResult, error) {
 	startKey := ""
 	endKey := ""
@@ -100,6 +112,9 @@ func (s *SmartContract) QueryAll(ctx contractapi.TransactionContextInterface) ([
 	return results, nil
 }
 
+//
+// 调用示例: '{"function":"delete","Args":["f1"]}'
+//
 func (contract *SmartContract) Delete(ctx contractapi.TransactionContextInterface, fileRecordID string) error {
 	return ctx.GetStub().DelState(fileRecordID)
 }

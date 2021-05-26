@@ -39,7 +39,10 @@ type SmartContract struct {
 //
 func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterface, produceID, traceID string, record ProduceRecord) error {
 	// 注册时初始化并更新 trace record
-	// todo 权限控制
+
+	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org1MSP" {
+		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+	}
 
 	Args := [][]byte{[]byte("register"), []byte(traceID)}
 	response := ctx.GetStub().InvokeChaincode(CHAINCODE_NAME, Args, CHANNEL_NAME)

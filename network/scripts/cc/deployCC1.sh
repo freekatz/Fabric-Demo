@@ -105,28 +105,28 @@ chaincodeInvokeInit() {
 chaincodeInvokeTest() {
   ## !!! 输入参数在 shell 中不要有空格
   infoln "登记病人信息"
-  chaincodeInvoke '{"function":"registerPatient","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"h1\"}"]}' patient
+  chaincodeInvoke '{"function":"register","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"h1\"}"]}' patient
   sleep 5
   infoln "查询登记结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
+  chaincodeInvoke '{"function":"query","Args":["p1"]}' patient
   sleep 5
   infoln "更新病人信息（名字和性别）"
-  chaincodeInvoke '{"function":"updatePatient","Args":["p1","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}' patient
+  chaincodeInvoke '{"function":"update","Args":["p1","[\"name\",\"gender\"]","[\"ZJH-2\",\"female\"]"]}' patient
   sleep 5
   infoln "查询更新结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
+  chaincodeInvoke '{"function":"query","Args":["p1"]}' patient
   sleep 5
   infoln "删除病人信息"
-  chaincodeInvoke '{"function":"deletePatient","Args":["p1"]}' patient
+  chaincodeInvoke '{"function":"delete","Args":["p1"]}' patient
   sleep 5
   infoln "查询删除结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
+  chaincodeInvoke '{"function":"query","Args":["p1"]}' patient
   sleep 5
   infoln "再次登记病人信息"
-  chaincodeInvoke '{"function":"registerPatient","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"h1\"}"]}' patient
+  chaincodeInvoke '{"function":"register","Args":["p1","{\"name\":\"ZJH-1\",\"gender\":\"male\",\"birth\":\"1998-10-01\",\"identifyID\":\"ABCDEFGHIJKLMNOP\",\"phoneNumber\":\"151-2300-0000\",\"address\":\"ChongQing\",\"nativePlace\":\"NeiMengGu\",\"creditCard\":\"6217-0000-0000-0000\",\"healthcareID\":\"h1\"}"]}' patient
   sleep 5
   infoln "查询登记结果"
-  chaincodeInvoke '{"function":"queryPatient","Args":["p1"]}' patient
+  chaincodeInvoke '{"function":"query","Args":["p1"]}' patient
   sleep 5
   infoln "获取病人医保信息"
   chaincodeInvoke '{"function":"makeDigest","Args":["p1"]}' patient

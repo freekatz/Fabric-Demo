@@ -152,8 +152,10 @@ chaincodeInvokeTest() {
   elif [ ${CHANNEL_ID} -eq 3 ]; then
     docker exec cli30 bash ./scripts/cc/deployCC3.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
   elif [ ${CHANNEL_ID} -eq 12 ]; then
+    # todo 修改 msp id
     docker exec cli10 bash ./scripts/cc/deployCC12.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
   elif [ ${CHANNEL_ID} -eq 123 ]; then
+    # todo 修改 msp id
     docker exec cli10 bash ./scripts/cc/deployCC123.sh $CHANNEL_NAME $CHANNEL_ID $CC_NAME $CC_SRC_PATH $CC_SRC_LANGUAGE $CC_VERSION $CC_SEQUENCE $CC_INIT_FCN $CC_END_POLICY $CC_COLL_CONFIG $VERBOSE test
   else
     errorln "Channel not exist!"

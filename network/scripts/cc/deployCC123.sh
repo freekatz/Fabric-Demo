@@ -107,24 +107,26 @@ chaincodeInvokeInit() {
 
 
 chaincodeInvokeTest() {
+  infoln ""
   ## !!! 输入参数在 shell 中不要有空格
-  infoln "测试 Produce"
-  chaincodeInvoke '{"function":"register","Args":["p1","t1","{\"name\":\"bj-P1\",\"producer\":\"bj\",\"address\":\"beijing\",\"date\":\"2021-05-01-12:00:00\",\"life\":\"-1\"}"]}' produce
-  sleep 5
-  chaincodeInvoke '{"function":"query","Args":["p1"]}' produce
-  chaincodeInvoke '{"function":"query","Args":["t1"]}' trace
-  infoln "测试 Process"
-  chaincodeInvoke '{"function":"register","Args":["pp1","t1","{\"name\":\"cq-PP1\",\"type\":\"machine\",\"processor\":\"cq\",\"address\":\"chongqing\",\"date\":\"2021-05-10-23:00:00\",\"life\":\"-1\"}"]}' process
-  sleep 5
-  chaincodeInvoke '{"function":"query","Args":["pp1"]}' process
-  chaincodeInvoke '{"function":"query","Args":["t1"]}' trace
-  infoln "测试 Transport"
-  chaincodeInvoke '{"function":"register","Args":["tt1","t1","{\"transporter\":\"Shunfeng\",\"originAddress\":\"chongqing\",\"targetAddress\":\"neimenggu\",\"startDate\":\"2021-05-11-7:00:00\",\"endDate\":\"2021-05-15-15:30:00\"}"]}' transport
-  sleep 5
-  chaincodeInvoke '{"function":"query","Args":["tt1"]}' transport
-  chaincodeInvoke '{"function":"query","Args":["t1"]}' trace
+  # ### Org1MSP
+  # infoln "测试 Produce"
+  # chaincodeInvoke '{"function":"register","Args":["p1","t1","{\"name\":\"bj-P1\",\"producer\":\"bj\",\"address\":\"beijing\",\"date\":\"2021-05-01-12:00:00\",\"life\":\"-1\"}"]}' produce
+  # sleep 5
+  # chaincodeInvoke '{"function":"query","Args":["p1"]}' produce
+  # ### Org2MSP
+  # infoln "测试 Process"
+  # chaincodeInvoke '{"function":"register","Args":["pp1","t1","{\"name\":\"cq-PP1\",\"type\":\"machine\",\"processor\":\"cq\",\"address\":\"chongqing\",\"date\":\"2021-05-10-23:00:00\",\"life\":\"-1\"}"]}' process
+  # sleep 5
+  # chaincodeInvoke '{"function":"query","Args":["pp1"]}' process
+  # ### Org3MSP
+  # infoln "测试 Transport"
+  # chaincodeInvoke '{"function":"register","Args":["tt1","t1","{\"transporter\":\"Shunfeng\",\"originAddress\":\"chongqing\",\"targetAddress\":\"neimenggu\",\"startDate\":\"2021-05-11-7:00:00\",\"endDate\":\"2021-05-15-15:30:00\"}"]}' transport
+  # sleep 5
+  # chaincodeInvoke '{"function":"query","Args":["tt1"]}' transport
+  # chaincodeInvoke '{"function":"query","Args":["t1"]}' trace
 
-  chaincodeInvoke '{"function":"queryHistory","Args":["t1"]}' trace
+  # chaincodeInvoke '{"function":"queryHistory","Args":["t1"]}' trace
 }
 
 chaincodeInvoke() {
