@@ -1,10 +1,10 @@
-module admin
+module cli
 
 go 1.15
 
 require (
 	github.com/1uvu/Fabric-Demo/crypt v0.0.0 // indirect
-	github.com/1uvu/Fabric-Demo/structures v0.0.0 // indirect
+	github.com/1uvu/Fabric-Demo/structures v0.0.0
 	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/hyperledger/fabric-protos-go v0.0.0-20200707132912-fee30f3ccd23 // indirect
 	github.com/hyperledger/fabric-sdk-go v1.0.0

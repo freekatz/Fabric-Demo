@@ -3,6 +3,8 @@
 rm -rf keystore/
 rm -rf wallet/
 
+go mod vendor
+
 ENV_DAL=`echo $DISCOVERY_AS_LOCALHOST`
 
 echo "ENV_DAL:"$DISCOVERY_AS_LOCALHOST
@@ -14,6 +16,6 @@ fi
 
 echo "DISCOVERY_AS_LOCALHOST="$DISCOVERY_AS_LOCALHOST
 
-echo "run sdk app client test..."
+echo "run sdk app and admin client test..."
 
-go run main.go
+go test

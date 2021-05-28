@@ -4,7 +4,7 @@ Copyright 2020 IBM All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0
 */
 
-package main
+package cli
 
 import (
 	"encoding/json"
@@ -12,15 +12,15 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"testing"
 
-	"github.com/1uvu/Fabric-Demo/api/admin"
 	"github.com/1uvu/Fabric-Demo/structures"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 )
 
 type GenderType = structures.GenderType
 
-type Patient = structures.PatientInHOS
+type Patient = structures.PatientInHIB
 
 type QueryResult struct {
 	Key    string `json: "Key"` // pat id
@@ -43,18 +43,109 @@ var (
 		"network",
 		"orgs",
 	)
-	orgName    string = "Org1"
-	orgMSP     string = "Org1MSP"
-	orgHost    string = "org1.example.com"
-	configName string = "admin-org1.yaml"
+	orgName    string = "Org2"
+	orgMSP     string = "Org2MSP"
+	orgHost    string = "org2.example.com"
+	configName string = ""
 	orgUser    string = "User1"
 	orgAdmin   string = "Admin"
 )
 
-func main() {
-	fmt.Println("testing admin client")
+func Test(t *testing.T) {
+	appTest()
+	adminTest()
+}
 
-	admin.SetEnv("true")
+func appTest() {
+	fmt.Println("testing app client")
+	configName = "app-org2.yaml"
+
+	SetAppEnv("true")
+
+	credPath := filepath.Join(
+		basePath,
+		"peerOrganizations",
+		orgHost,
+		"users",
+		fmt.Sprintf("%s@%s", orgUser, orgHost),
+		"msp",
+	)
+	certPath := filepath.Join(
+		credPath,
+		"signcerts",
+		fmt.Sprintf("%s@%s-cert.pem", orgUser, orgHost),
+	)
+	configPath := filepath.Join(
+		basePath,
+		"app",
+		configName,
+	)
+	params := AppParams{ // todo 这里是指针，所以，初始化时直接变更即可
+		CredPath:   credPath,
+		CertPath:   certPath,
+		ConfigPath: configPath,
+		OrgMSP:     orgMSP,
+		OrgName:    orgName,
+		OrgAdmin:   orgAdmin,
+		OrgUser:    orgUser,
+		OrgHost:    orgHost,
+	}
+	SetAppParams(&params)
+
+	app2, err := GetAppClient("channel2")
+	if err != nil {
+		fmt.Printf("Failed to get app client: %s\n", err)
+		os.Exit(1)
+	}
+
+	app12, err := GetAppClient("channel12")
+	if err != nil {
+		fmt.Printf("Failed to get app client: %s\n", err)
+		os.Exit(1)
+	}
+
+	hid := "h3"
+	patient := structures.NewPatientInHIB(
+		[]string{
+			"ZJH-3",
+			"female",
+			"2020-10-10",
+			"abcdefghijklmnop",
+			"151",
+			"CQU",
+			"NMG",
+			"6674-1231-1000",
+		},
+	)
+
+	patientChaincode := app2.GetContract("patient")
+
+	result, err := patientChaincode.SubmitTransaction("register", []string{hid, patient.String()}...)
+	if err != nil {
+		fmt.Printf("Failed to submit transaction: %s\n", err)
+	}
+
+	result, err = patientChaincode.EvaluateTransaction("makeDigest", []string{hid}...)
+	if err != nil {
+		fmt.Printf("Failed to evaluate transaction: %s\n", err)
+	}
+	digest := new(DigestResult)
+	_ = json.Unmarshal(result, digest)
+	log.Println(digest.Digest)
+
+	bridgeChaincode := app12.GetContract("bridge")
+
+	_, err = bridgeChaincode.SubmitTransaction("register", []string{hid, digest.Digest}...)
+	if err != nil {
+		fmt.Printf("Failed to evaluate transaction: %s\n", err)
+	}
+}
+
+func adminTest() {
+	fmt.Println("testing admin client")
+	configName = "admin-org2.yaml"
+
+	SetAdminEnv("true")
 
 	credPath := filepath.Join(
 		basePath,
@@ -74,7 +165,7 @@ func main() {
 		"admin",
 		configName,
 	)
-	params := admin.ClientParams{
+	params := AdminParams{
 		CredPath:   credPath,
 		CertPath:   certPath,
 		ConfigPath: configPath,
@@ -84,9 +175,9 @@ func main() {
 		OrgUser:    orgUser,
 		OrgHost:    orgHost,
 	}
-	admin.SetParams(&params)
+	SetAdminParams(&params)
 
-	admin1, err := admin.GetAdminClient()
+	admin1, err := GetAdminClient()
 
 	if err != nil {
 		fmt.Printf("Failed to get admin1 client: %s\n", err)
@@ -134,14 +225,14 @@ func main() {
 	log.Printf("invoke chaincode tx: %s", resp.TransactionID)
 
 	// 获取其他通道的 app client
-	app1, _ := admin1.GetAppClient("channel1")
-	args = [][]byte{[]byte("p1")}
+	app2, _ := admin1.GetAppClient("channel2")
+	args = [][]byte{[]byte("h3")}
 	req = channel.Request{
 		ChaincodeID: "patient",
-		Fcn:         "queryPatient",
+		Fcn:         "query",
 		Args:        args,
 	}
-	resp, err = app1.CC.Query(req)
+	resp, err = app2.CC.Query(req)
 
 	if err != nil {
 		fmt.Println(err)
@@ -149,15 +240,15 @@ func main() {
 	log.Printf("invoke chaincode tx: %s", resp.TransactionID)
 	log.Printf("resp content:\n%s", string(resp.Payload))
 
-	// 这里获取到的 _app1 与 app1 是同一个 app client
-	_app1, _ := admin1.GetAppClient("channel1")
+	// 这里获取到的 _app2 与 app2 是同一个 app client
+	_app2, _ := admin1.GetAppClient("channel2")
 	args = [][]byte{}
 	req = channel.Request{
 		ChaincodeID: "patient",
-		Fcn:         "queryAllPatients",
+		Fcn:         "queryAll",
 		Args:        args,
 	}
-	resp, err = _app1.CC.Query(req)
+	resp, err = _app2.CC.Query(req)
 
 	if err != nil {
 		fmt.Println(err)
