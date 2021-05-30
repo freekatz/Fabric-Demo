@@ -1,4 +1,4 @@
-package gateway
+package serve
 
 import (
 	"log"
@@ -6,12 +6,14 @@ import (
 	"strings"
 )
 
-type HandlerFunc func(*Context)
+type (
+	HandlerFunc func(*Context)
 
-type router struct {
-	roots    map[string]*node       // method : *node
-	handlers map[string]HandlerFunc // method-pattern: HandlerFunc
-}
+	router struct {
+		roots    map[string]*node       // method : *node
+		handlers map[string]HandlerFunc // method-pattern: HandlerFunc
+	}
+)
 
 func newRouter() *router {
 	return &router{

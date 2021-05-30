@@ -1,4 +1,4 @@
-module gateway
+module serve
 
 go 1.15
 
