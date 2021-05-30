@@ -39,7 +39,6 @@ type DigestResult struct {
 var (
 	basePath string = filepath.Join(
 		"..",
-		"..",
 		"network",
 		"orgs",
 	)
