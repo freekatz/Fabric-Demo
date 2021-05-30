@@ -1,2 +1,3 @@
 github.com/1uvu/Fabric-Demo v0.0.0-20210529091904-4ea8b2dd4986 h1:47NIQwlwHEmwdRjAz4kPtBL+BMyNXHF5/LmG+60SWEk=
+github.com/1uvu/Fabric-Demo v0.0.0-20210529091904-4ea8b2dd4986/go.mod h1:79ePL323TeX8RY98eIqS8XqY4dj+fko5GB3IWOl0efo=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
