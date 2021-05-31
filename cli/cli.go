@@ -250,3 +250,13 @@ func (admin *AdminClient) GetAppClient(channelID string) (*appClient, error) {
 
 	return app, nil
 }
+
+type IPFSClient struct {
+}
+
+func GetIPFSClient() *IPFSClient {
+
+	ipfs := new(IPFSClient)
+
+	return ipfs
+}

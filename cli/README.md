@@ -1,6 +1,8 @@
 # API
 
-使用 SDK 访问和管理 Fabric 网络
+使用 SDK 访问和管理 Fabric 网络, 以及 IPFS 网络
+
+## Fabric SDK 
 
 Fabric SDK 主要存在着五种客户端（客户端都是针对于当前组织来说的），其中常用的包括如下两种：
 - Resource Manage Client (RC)
@@ -40,3 +42,9 @@ type Network struct {
 如果想要使用 cc，ec 和 lc，则可以通过 admin client 的 sdk 成员十分简便地调用 admin.InitAppClient 实例化得到。
 
 而且，并没有进行过多的封装，只是简化了实例化各种客户端的操作，扩展性更强。
+
+## IPFS SDK
+
+https://github.com/ipfs/specs/blob/master/API_CORE.md
+
+https://pkg.go.dev/github.com/ipfs/go-ipfs-api?utm_source=godoc

@@ -563,7 +563,7 @@ certificateAuthorities:
 ###############################################################################
 operations:
   # host and port for the operations server
-  listenAddress: 127.0.0.1:8080
+  listenAddress: 127.0.0.1:9090
 
   # TLS configuration for the operations endpoint
   tls:

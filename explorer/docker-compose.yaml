@@ -50,7 +50,7 @@ services:
       - ../network/orgs:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
-      - 8080:8080
+      - 9090:9090
     depends_on:
       explorerdb.mynetwork.com:
         condition: service_healthy
