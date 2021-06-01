@@ -25,3 +25,5 @@ system-genesis-block/
 *.tar.gz
 log.txt
 package_id.txt
+
+network/orgs/app/app-org*
