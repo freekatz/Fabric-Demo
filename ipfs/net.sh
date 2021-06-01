@@ -5,32 +5,16 @@ export CLUSTER_SECRET=b8def8a4ab09bdbb6bc3806115f6437184297f94c703c3729360fb11d0
 
 . utils.sh
 
-function clearContainers() {
-    CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*/) {print $1}')
-    if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
-        infoln "No containers available for deletion"
-    else
-        docker rm -f $CONTAINER_IDS
-    fi
-}
-
-function removeUnwantedImages() {
-    DOCKER_IMAGE_IDS=$(docker images | awk '($1 ~ /dev-peer.*/) {print $3}')
-    if [ -z "$DOCKER_IMAGE_IDS" -o "$DOCKER_IMAGE_IDS" == " " ]; then
-        infoln "No images available for deletion"
-    else
-        docker rmi -f $DOCKER_IMAGE_IDS
-    fi
-}
-
 function networkInit() {
   set -x
   infoln "允许跨域访问 API"
   docker exec ipfs0 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
   docker exec ipfs0 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+  docker exec ipfs0 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
 
   docker exec ipfs1 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
   docker exec ipfs1 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+  docker exec ipfs0 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials '["true"]'
 
   infoln "分发 swarm key"
   go get -u github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen
@@ -46,6 +30,10 @@ function networkInit() {
   docker exec ipfs0 ipfs bootstrap rm --all
   docker exec ipfs1 ipfs bootstrap rm --all
 
+
+  res=$?
+  { set +x; } 2>/dev/null
+  
   infoln "# 暂时还需要手动配置"
   infoln "# ipfs1 添加节点 ipfs0"
   infoln "docker exec ipfs0 ipfs id"
@@ -64,8 +52,6 @@ function networkInit() {
   infoln "sleep 3"
   infoln "docker exec ipfs0 ipfs swarm peers"
 
-  res=$?
-  { set +x; } 2>/dev/null
 }
 
 function networkUp() {
@@ -89,11 +75,6 @@ function networkDown() {
   set -x
   infoln "Down the ipfs"
   docker-compose down --volumes --remove-orphans
-  # Bring down the network, deleting the volumes
-  #Cleanup the chaincode containers
-  clearContainers
-  #Cleanup images
-  removeUnwantedImages
 
   cd $_p
   res=$?

@@ -74,7 +74,7 @@ services:
       # The cluster swarm port would need  to be exposed if this container
       # was to connect to cluster peers on other hosts.
       # But this is just a testing cluster.
-      # - "9096:9096" # Cluster IPFS Proxy endpoint
+      - "127.0.0.1:9096:9096" # Cluster IPFS Proxy endpoint
     volumes:
       - ./compose/cluster0:/data/ipfs-cluster
 
@@ -106,13 +106,13 @@ services:
       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs1/tcp/5001
       CLUSTER_CRDT_TRUSTEDPEERS: '*'
       CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
-    # ports:
+    ports:
       # Open API port (allows ipfs-cluster-ctl usage on host)
-      # - "127.0.0.1:9194:9094"
+      - "127.0.0.1:9194:9094"
       # The cluster swarm port would need  to be exposed if this container
       # was to connect to cluster peers on other hosts.
       # But this is just a testing cluster.
-      # - "9196:9096" # Cluster IPFS Proxy endpoint
+      - "127.0.0.1:9196:9096" # Cluster IPFS Proxy endpoint
     volumes:
       - ./compose/cluster1:/data/ipfs-cluster
 
