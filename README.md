@@ -10,7 +10,6 @@ Fabric 数据存储、共享和溯源 Demo
 - [x] [cli: fabric sdk client 及 ipfs api client 封装](./cli) 
 - [x] [config: fabric network 默认配置文件](./config)
 - [x] [crypt: 密码相关的脚手架](./crypt)
-- [x] [explorer: 区块链浏览器](./explorer)
 - [x] [ipfs: 简单的 IPFS network](./ipfs)
 - [x] [network: 可扩展的 fabric 网络搭建相关材料](./network)
 - [x] [serve: 纯 golang 实现的用于编写 http 服务的简单 web 框架](./serve)

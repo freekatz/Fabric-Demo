@@ -88,7 +88,7 @@ function createChannel() {
     bash scripts/channel/createChannel.sh $CHANNEL_NAME
     infoln "Up the explorer"
     local _p=$PWD
-    cd ../explorer
+    cd ./explorer
     docker-compose up -d 
     cd $_p
 }
@@ -133,7 +133,7 @@ function networkDown() {
 
   infoln "Down the explorer"
   local _p=$PWD
-  cd ../explorer
+  cd ./explorer
   docker-compose down -v 
   cd $_p
   res=$?
