@@ -83,9 +83,15 @@ services:
   ##################################################################################
 
   # 有关注释，请参阅集群PEER 0（在此处和下面均已删除）
+  # 由于当前为单机部署，所以下面省略了一些参数
+  # 注意：集群只是管理单位，而私有组织的划分根据 ~/.ipfs/swarm.key 下的密钥来进行 (这里没有指定，所以默认属于一个组织)
   ipfs1:
     container_name: ipfs1
     image: ipfs/go-ipfs:release
+    ports:
+      - "4101:4001" # ipfs swarm - expose if needed/wanted
+      - "5101:5001" # ipfs api - expose if needed/wanted
+      - "8180:8080" # ipfs gateway - expose if needed/wanted
     volumes:
       - ./compose/ipfs1:/data/ipfs
 
@@ -100,6 +106,13 @@ services:
       CLUSTER_IPFSHTTP_NODEMULTIADDRESS: /dns4/ipfs1/tcp/5001
       CLUSTER_CRDT_TRUSTEDPEERS: '*'
       CLUSTER_MONITORPINGINTERVAL: 2s # Speed up peer discovery
+    # ports:
+      # Open API port (allows ipfs-cluster-ctl usage on host)
+      # - "127.0.0.1:9194:9094"
+      # The cluster swarm port would need  to be exposed if this container
+      # was to connect to cluster peers on other hosts.
+      # But this is just a testing cluster.
+      # - "9196:9096" # Cluster IPFS Proxy endpoint
     volumes:
       - ./compose/cluster1:/data/ipfs-cluster
 

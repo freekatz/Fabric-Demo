@@ -8,7 +8,27 @@ C_YELLOW='\033[1;33m'
 
 # Print the usage message
 function printHelp() {
-  println "no help now."
+  USAGE="$1"
+  if [ "$USAGE" == "up" ]; then
+    println "Usage: "
+    println "  net.sh \033[0;32mup\033[0m [Flags]"
+    println
+    println "    Flags:"
+    println "    -h - Print this message"
+    println
+    println " Examples:"
+    println "   bash net.sh up"
+  else
+    println "Usage: "
+    println "  net.sh <Mode> [Flags]"
+    println "    Modes:"
+    println "      \033[0;32mup\033[0m - Bring up IPFS nodes"
+    println "      \033[0;32minit\033[0m - Initialize the IPFS network"
+    println "      \033[0;32mstart\033[0m - Start the net"
+    println "      \033[0;32mstop\033[0m - Stop the net"
+    println "      \033[0;32mrestart\033[0m - Restart the net"
+    println "      \033[0;32mdown\033[0m - Bring down the net"
+  fi
 }
 
 # println echos string

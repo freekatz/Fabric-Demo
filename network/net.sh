@@ -105,12 +105,17 @@ function deployCC() {
 }
 
 function networkStart() {
-  docker-compose up -d
+  docker-compose start
 }
 
 function networkStop() {
-  docker-compose down -v
+  docker-compose stop
 }
+
+function networkRestart() {
+  docker-compose restart
+}
+
 
 # Tear down running network
 function networkDown() {
@@ -255,6 +260,8 @@ elif [ "${MODE}" == "start" ]; then
   networkStart
 elif [ "${MODE}" == "stop" ]; then
   networkStop
+elif [ "${MODE}" == "restart" ]; then
+  networkRestart
 elif [ "${MODE}" == "down" ]; then
   networkDown
 else

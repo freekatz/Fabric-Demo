@@ -65,6 +65,7 @@ function printHelp() {
     println "      \033[0;32mdeployCC\033[0m - Deploy a chaincode to a channel (defaults to asset-transfer-basic)"
     println "      \033[0;32mstart\033[0m - Start the net"
     println "      \033[0;32mstop\033[0m - Stop the net"
+    println "      \033[0;32mrestart\033[0m - Restart the net"
     println "      \033[0;32mdown\033[0m - Bring down the net"
     println
     println "    Flags:"
