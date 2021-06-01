@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-version: '2.4'
+version: '2.1'
 
 volumes:
   pgdata:
@@ -50,7 +50,7 @@ services:
       - ../network/orgs:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
-      - 9090:9090
+      - 9090:8080
     depends_on:
       explorerdb.mynetwork.com:
         condition: service_healthy

@@ -5,7 +5,7 @@
 		"tlsEnable": true,
 		"adminCredential": {
 			"id": "admin",
-			"password": "2021"
+			"password": "adminpw"
 		},
 		"enableAuthentication": true,
 		"organization": "Org1MSP",
