@@ -7,7 +7,7 @@ Fabric 数据存储、共享和溯源 Demo
 ## Archived
 
 - [x] [chaincode: 每个通道的链码定义](./chaincode)
-- [x] [cli: fabric sdk client 及 ipfs api client 封装](./cli) 
+- [x] ~~cli~~ (已迁移到 [fabric-sdk-client](https://github.com/1uvu/fabric-sdk-client) 和[ipfs-api-client](https://github.com/1uvu/ipfs-api-client)): fabric sdk client 及 ipfs api client 封装
 - [x] [config: fabric network 默认配置文件](./config)
 - [x] [crypt: 密码相关的脚手架](./crypt)
 - [x] [ipfs: 简单的 IPFS network](./ipfs)
