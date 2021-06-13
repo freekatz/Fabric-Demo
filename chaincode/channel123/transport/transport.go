@@ -41,14 +41,14 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 	// 注册时更新 trace record
 
 	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org3MSP" {
-		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+		return fmt.Errorf("can not pass the identify with your MSP ID %s", msp)
 	}
 
 	Args := [][]byte{[]byte("update"), []byte(traceID), []byte("transportID"), []byte(transportID)}
 	response := ctx.GetStub().InvokeChaincode(CHAINCODE_NAME, Args, CHANNEL_NAME)
 
 	if response.Status != 200 {
-		return fmt.Errorf("Error %s with trace id %s, or", string(response.Payload), traceID)
+		return fmt.Errorf("error %s with trace id %s, or", string(response.Payload), traceID)
 	}
 
 	recordAsBytes, _ := json.Marshal(record)
@@ -63,14 +63,14 @@ func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface
 	recordAsBytes, err := ctx.GetStub().GetState(transportID)
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to read from world state. %s", err.Error())
+		return nil, fmt.Errorf("failed to read from world state with error: %s", err.Error())
 	}
 
 	record := new(TransportRecord)
 	_ = json.Unmarshal(recordAsBytes, record)
 
 	if record.Transporter == "" {
-		return nil, fmt.Errorf("There have no transport record in ledger with transport id: %s", transportID)
+		return nil, fmt.Errorf("there have no transport record in ledger with transport id: %s", transportID)
 	}
 
 	return record, nil

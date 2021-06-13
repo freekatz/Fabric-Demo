@@ -8,8 +8,8 @@ import (
 type GenderType string
 
 const (
-	Male       GenderType = "male"   // 男性
-	Female     GenderType = "female" // 女性
+	Male           GenderType = "male"   // 男性
+	Female         GenderType = "female" // 女性
 	NoneGenderType GenderType = ""
 )
 

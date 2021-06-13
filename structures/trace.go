@@ -8,10 +8,10 @@ import (
 type ProcessType string
 
 const (
-	Medicine         ProcessType = "medicine"  // 药品
-	Equipment        ProcessType = "equipment" // 设备，如射线仪、B 超仪等设备
-	Machine          ProcessType = "machine"   // 器械，如手术刀、担架等器械
-	Material         ProcessType = "material"  // 耗材，如口罩、针筒等耗材
+	Medicine        ProcessType = "medicine"  // 药品
+	Equipment       ProcessType = "equipment" // 设备，如射线仪、B 超仪等设备
+	Machine         ProcessType = "machine"   // 器械，如手术刀、担架等器械
+	Material        ProcessType = "material"  // 耗材，如口罩、针筒等耗材
 	NoneProcessType ProcessType = ""
 )
 
@@ -31,88 +31,88 @@ func getProcessType(processTypeStr string) (ProcessType, error) {
 }
 
 type ProduceRecord struct {
-	Name     string `json:"name"` // 名称
-	Producer    string `json:"producer"` // 制造商
-	Address  string `json:"address"` // 生产地
-	Date     string `json:"date"` // 生产日期
-	Life     string `json:"life"` // 保质期, -1 时为永不过期
+	Name     string `json:"name"`     // 名称
+	Producer string `json:"producer"` // 制造商
+	Address  string `json:"address"`  // 生产地
+	Date     string `json:"date"`     // 生产日期
+	Life     string `json:"life"`     // 保质期, -1 时为永不过期
 }
 
 type ProcessRecord struct {
-	Name     string `json:"name"` // 名称
-	Type  ProcessType `json:"type"` // 类型
-	Processor    string `json:"processor"` // 加工商
-	Address  string `json:"address"` // 加工地
-	Date     string `json:"date"` // 加工日期
-	Life     string `json:"life"` // 保质期, -1 时为永不过期
+	Name      string      `json:"name"`      // 名称
+	Type      ProcessType `json:"type"`      // 类型
+	Processor string      `json:"processor"` // 加工商
+	Address   string      `json:"address"`   // 加工地
+	Date      string      `json:"date"`      // 加工日期
+	Life      string      `json:"life"`      // 保质期, -1 时为永不过期
 }
 
 type TransportRecord struct {
-	Transporter string `json:"transporter"` // 运输商
+	Transporter   string `json:"transporter"`   // 运输商
 	OriginAddress string `json:"originAddress"` // 起始地
-	TargetAddress  string `json:"targetAddress"` // 目的地
-	StartDate     string `json:"startDate"` // 运输时间
-	EndDate     string `json:"endDate"` // 到达时间
+	TargetAddress string `json:"targetAddress"` // 目的地
+	StartDate     string `json:"startDate"`     // 运输时间
+	EndDate       string `json:"endDate"`       // 到达时间
 }
 
 type TraceRecord struct {
-	ProduceID string `json:"produceID"` // 生产
-	ProcessID string `json:"processID"` // 加工
+	ProduceID   string `json:"produceID"`   // 生产
+	ProcessID   string `json:"processID"`   // 加工
 	TransportID string `json:"transportID"` // 运输
 }
 
 type TraceHistory struct {
-	TxID string `json:"txID"`
-	TxValue string `json:"txValue"`
-	TxTime string `json:"txTime"`
+	TxID     string `json:"txID"`
+	TxValue  string `json:"txValue"`
+	TxTime   string `json:"txTime"`
 	TxStatus string `json:"txStatus"`
 }
 
 func NewProduceRecord(values []string) ProduceRecord {
 	return ProduceRecord{
-		Name: values[0],
+		Name:     values[0],
 		Producer: values[1],
-		Address: values[2],
-		Date: values[3],
-		Life: values[4],
+		Address:  values[2],
+		Date:     values[3],
+		Life:     values[4],
 	}
 }
 
 func NewProcessRecord(values []string) ProcessRecord {
 	processType, _ := getProcessType(values[1])
 	return ProcessRecord{
-		Name: values[0],
-		Type: processType,
+		Name:      values[0],
+		Type:      processType,
 		Processor: values[2],
-		Address: values[3],
-		Date: values[4],
-		Life: values[5],
+		Address:   values[3],
+		Date:      values[4],
+		Life:      values[5],
 	}
 }
 
 func NewTransportRecord(values []string) TransportRecord {
 	return TransportRecord{
-		Transporter: values[0],
+		Transporter:   values[0],
 		OriginAddress: values[1],
 		TargetAddress: values[2],
-		StartDate: values[3],
-		EndDate: values[4],
+		StartDate:     values[3],
+		EndDate:       values[4],
 	}
 }
 
 func NewTraceRecord(values []string) TraceRecord {
 	return TraceRecord{
-		ProduceID: values[0],
-		ProcessID: values[1],
+		ProduceID:   values[0],
+		ProcessID:   values[1],
 		TransportID: values[2],
 	}
 }
 
 func NewTraceHistory(values []string) TraceHistory {
 	return TraceHistory{
-		TxID: values[0],
-		TxValue: values[1],
-		TxTime: values[2],
+		TxID:     values[0],
+		TxValue:  values[1],
+		TxTime:   values[2],
 		TxStatus: values[3],
 	}
 }

@@ -53,7 +53,7 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 	// 只有生产商才可注册
 
 	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != "Org1MSP" {
-		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+		return fmt.Errorf("can not pass the identify with your MSP ID %s", msp)
 	}
 
 	// 注册时默认自动生成空对象
@@ -64,7 +64,7 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 	}
 	_v, err := _r.GetTraceRecordValue("produceID")
 	if _v != "" && err == nil {
-		return fmt.Errorf("Can not register twice.")
+		return fmt.Errorf("can not register twice")
 	}
 
 	record := structures.NewTraceRecord([]string{"", "", ""})
@@ -78,7 +78,7 @@ func (contract *SmartContract) Register(ctx contractapi.TransactionContextInterf
 //
 func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterface, traceID, field, value string) error {
 
-	// 只有生产商才可更新生产商的对应记录
+	// 只有更新与组织相对应的记录
 
 	_msp := ""
 	switch field {
@@ -89,11 +89,11 @@ func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterfac
 	case "transportID":
 		_msp = "Org3MSP"
 	default:
-		return fmt.Errorf("Unknow field named %s", field)
+		return fmt.Errorf("unknow field named %s", field)
 	}
 
 	if msp, _ := ctx.GetClientIdentity().GetMSPID(); msp != _msp {
-		return fmt.Errorf("Can not pass the identify with your MSP ID %s", msp)
+		return fmt.Errorf("can not pass the identify with your MSP ID %s", msp)
 	}
 
 	record, err := contract.Query(ctx, traceID)
@@ -106,7 +106,7 @@ func (contract *SmartContract) Update(ctx contractapi.TransactionContextInterfac
 
 	_v, err := record.GetTraceRecordValue(field)
 	if _v != "" && err == nil {
-		return fmt.Errorf("Can not update twice.")
+		return fmt.Errorf("can not update twice")
 	}
 
 	record.UpdateTraceRecordField(field, value)
@@ -123,7 +123,7 @@ func (contract *SmartContract) Query(ctx contractapi.TransactionContextInterface
 	recordAsBytes, err := ctx.GetStub().GetState(traceID)
 
 	if err != nil {
-		return nil, fmt.Errorf("Failed to read from world state. %s", err.Error())
+		return nil, fmt.Errorf("failed to read from world state with error: %s", err.Error())
 	}
 
 	record := new(TraceRecord)
