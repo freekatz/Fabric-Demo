@@ -26,4 +26,5 @@ system-genesis-block/
 log.txt
 package_id.txt
 
-network/orgs/app/app-org*
+app-org*.yaml
+app-org*.json
