@@ -1,9 +1,0 @@
-# github.com/1uvu/Fabric-Demo/crypt v0.0.0 => ../crypt
-## explicit
-# github.com/1uvu/Fabric-Demo/serve v0.0.0 => ../serve
-## explicit
-github.com/1uvu/Fabric-Demo/serve
-# github.com/1uvu/Fabric-Demo/structures v0.0.0 => ../structures
-## explicit
-# github.com/1uvu/Fabric-Demo/crypt v0.0.0 => ../crypt
-# github.com/1uvu/Fabric-Demo/structures v0.0.0 => ../structures
