@@ -22,6 +22,11 @@ var (
 		"org2",
 		"org3",
 	}
+	configs map[string]string = map[string]string{
+		"org1": "./config/client-org1.yaml",
+		"org2": "./config/client-org2.yaml",
+		"org3": "./config/client-org3.yaml",
+	}
 	clients []string = []string{
 		"chaincode", // 代替 channel 和 event client, 主要是 chaincode 相关的操作
 		"ledger",    // 主要是 ledger 的原始访问操作
@@ -31,32 +36,6 @@ var (
 	// 每种 client 对应的 opts
 	opts map[string][]string = make(map[string][]string)
 )
-
-func initOPTs() {
-	opts["chaincode"] = []string{
-		"invoke",
-		// add more opts for chaincode client
-	}
-
-	// define other client's opts
-}
-
-func onlyForV1() serve.HandlerFunc {
-	// 执行顺序: onlyForV2 -> handle -> logger
-	return func(c *serve.Context) {
-		// Start timer
-		t := time.Now()
-		// // if a server error occurred
-		// c.Fail(500, "Internal Server Error")
-		// Calculate resolution time
-		log.Printf("[%d] %s in %v for group v2", c.StatusCode, c.Req.RequestURI, time.Since(t))
-	}
-}
-
-func FormatAsDate(t time.Time) string {
-	year, month, day := t.Date()
-	return fmt.Sprintf("%d-%02d-%02d", year, month, day)
-}
 
 func Run() {
 	log.Println("http api.")
@@ -69,10 +48,11 @@ func Run() {
 		"FormatAsDate": FormatAsDate,
 	})
 
-	v1 := g.Group("/v1")
-	v1.Use(onlyForV1()) // v1 group middleware
+	// app 接口可以操作 2 种客户端，只包含链码调用相关的操作
+	app := g.Group("/app")
+	app.Use(onlyForApp()) // app group middleware
 	{
-		v1.POST("/app/:orgid/:client/:opt", func(c *serve.Context) {
+		app.POST("/app/:orgid/chaincode/invoke", func(c *serve.Context) {
 			// params := &types.InvokeParams{
 			params := &types.InvokeParams{
 				ChaincodeID: c.PostForm("chaincodeID"),
@@ -80,10 +60,16 @@ func Run() {
 				Args:        str2strArray(c.PostForm("args")),
 				NeedSubmit:  str2bool(c.PostForm("needSubmit")),
 			}
-			invokeHandle(c, params)
+			appInvokeHandle(c, params)
 			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
 		})
-		v1.POST("/admin/:orgid/:client/:opt", func(c *serve.Context) {
+	}
+
+	// admin 接口可以操作 5 种客户端，提供各种操作
+	admin := g.Group("/admin")
+	admin.Use(onlyForAdmin()) // v1 group middleware
+	{
+		admin.POST("/admin/:orgid/:client/:opt", func(c *serve.Context) {
 			// params := &types.InvokeParams{
 			params := &types.InvokeParams{
 				ChaincodeID: c.PostForm("chaincodeID"),
@@ -92,7 +78,7 @@ func Run() {
 				NeedSubmit:  str2bool(c.PostForm("needSubmit")),
 				Endpoints:   str2strArray(c.PostForm("endpoints")),
 			}
-			invokeHandle(c, params)
+			adminInvokeHandle(c, params)
 			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
 		})
 	}
@@ -100,8 +86,70 @@ func Run() {
 	g.Run(":9999")
 }
 
-// func invokeHandle(c *serve.Context, params *types.InvokeParams) {
-func invokeHandle(c *serve.Context, params *types.InvokeParams) {
+// define client's opts
+func initOPTs() {
+	opts["chaincode"] = []string{
+		"invoke",
+		// add more opts for chaincode client
+	}
+
+	// only for admin
+	opts["ledger"] = []string{
+		"queryChannelInfo",
+		"queryBlockInfo",
+		// add more opts for chaincode client
+	}
+
+	// define other client's opts
+}
+
+func onlyForApp() serve.HandlerFunc {
+	// 执行顺序: onlyForApp -> handle -> logger
+	return func(c *serve.Context) {
+		// Start timer
+		t := time.Now()
+		// // if a server error occurred
+		// c.Fail(500, "Internal Server Error")
+		// Calculate resolution time
+		log.Printf("[%d] %s in %v for group app", c.StatusCode, c.Req.RequestURI, time.Since(t))
+	}
+}
+
+func onlyForAdmin() serve.HandlerFunc {
+	// 执行顺序: onlyForAdmin -> handle -> logger
+	return func(c *serve.Context) {
+		// Start timer
+		t := time.Now()
+		// // if a server error occurred
+		// c.Fail(500, "Internal Server Error")
+		// Calculate resolution time
+		log.Printf("[%d] %s in %v for group admin", c.StatusCode, c.Req.RequestURI, time.Since(t))
+	}
+}
+
+func FormatAsDate(t time.Time) string {
+	year, month, day := t.Date()
+	return fmt.Sprintf("%d-%02d-%02d", year, month, day)
+}
+
+// func appInvokeHandle(c *serve.Context, params *types.InvokeParams) {
+func appInvokeHandle(c *serve.Context, params *types.InvokeParams) {
+
+	c.JSON(http.StatusOK, params) // replace with a other handler
+
+	// 1 todo [暂时不做] 判断 url 的动态路由合法性: 是否在允许的范围内
+	//=// c.Param("orgid")
+	//=// c.Param("client")
+	//=// c.Param("opt")
+
+	// 2 执行链码调用, 获取结果
+
+	// 3 使用 c.JSON() 返回调用结果
+
+}
+
+// func adminInvokeHandle(c *serve.Context, params *types.InvokeParams) {
+func adminInvokeHandle(c *serve.Context, params *types.InvokeParams) {
 
 	c.JSON(http.StatusOK, params) // replace with a other handler
 
