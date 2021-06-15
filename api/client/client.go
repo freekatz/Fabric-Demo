@@ -8,38 +8,37 @@ import (
 )
 
 var (
-	app   *client.AppClient
-	admin *client.AdminClient
+	apps   map[string]*client.AppClient   = make(map[string]*client.AppClient)
+	admins map[string]*client.AdminClient = make(map[string]*client.AdminClient)
 
 	appOnce   sync.Once
 	adminOnce sync.Once
-
-	clientConfigPath string = "client_config.yaml"
 )
 
-func GetApp() (*client.AppClient, error) {
+// todo 修改为 abstract factory
+func GetApp(clientConfigPath string) (*client.AppClient, error) {
 	var err error
 	appOnce.Do(func() {
-		if app == nil {
-			app, err = newApp()
+		if _, ok := apps[clientConfigPath]; !ok {
+			apps[clientConfigPath], err = newApp(clientConfigPath)
 		}
 	})
 
-	return app, err
+	return apps[clientConfigPath], err
 }
 
-func GetAdmin() (*client.AdminClient, error) {
+func GetAdmin(clientConfigPath string) (*client.AdminClient, error) {
 	var err error
 	adminOnce.Do(func() {
-		if admin == nil {
-			admin, err = newAdmin()
+		if _, ok := admins[clientConfigPath]; !ok {
+			admins[clientConfigPath], err = newAdmin(clientConfigPath)
 		}
 	})
 
-	return admin, err
+	return admins[clientConfigPath], err
 }
 
-func newApp() (*client.AppClient, error) {
+func newApp(clientConfigPath string) (*client.AppClient, error) {
 
 	conf, err := newClientConfig(clientConfigPath)
 
@@ -51,7 +50,7 @@ func newApp() (*client.AppClient, error) {
 
 	envPairs := conf.App.Envs
 
-	app, err = client.GetAppClient("channel2", params, envPairs...)
+	app, err := client.GetAppClient("channel2", params, envPairs...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get app client: %s", err)
 	}
@@ -59,7 +58,7 @@ func newApp() (*client.AppClient, error) {
 	return app, nil
 }
 
-func newAdmin() (*client.AdminClient, error) {
+func newAdmin(clientConfigPath string) (*client.AdminClient, error) {
 
 	conf, err := newClientConfig(clientConfigPath)
 
@@ -71,7 +70,7 @@ func newAdmin() (*client.AdminClient, error) {
 
 	envPairs := conf.Admin.Envs
 
-	admin, err = client.GetAdminClient(params, envPairs...)
+	admin, err := client.GetAdminClient(params, envPairs...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get app client: %s", err)
 	}

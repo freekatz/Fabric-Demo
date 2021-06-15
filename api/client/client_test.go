@@ -5,36 +5,56 @@ import (
 	"testing"
 )
 
+var (
+	clientConfigPath1 string = "./config/client-org1.yaml"
+	clientConfigPath2 string = "./config/client-org2.yaml"
+	clientConfigPath3 string = "./config/client-org3.yaml"
+)
+
 func TestGetApp(t *testing.T) {
-	app, err := GetApp()
+	app2, err := GetApp(clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	app1, err := GetApp()
+	_app2, err := GetApp(clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	log.Println("app == nil: ", app == nil)
-	log.Println("app == app1: ", app == app1)
+	app1, err := GetApp(clientConfigPath1)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	log.Println("app2 == nil: ", app2 == nil)
+	log.Println("app2 == _app2: ", app2 == _app2)
+	log.Println("app2 == app1: ", app2 == app1)
 }
 
 func TestGetAdmin(t *testing.T) {
-	admin, err := GetAdmin()
+	admin2, err := GetAdmin(clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	admin1, err := GetAdmin()
+	_admin2, err := GetAdmin(clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	log.Println("admin == nil: ", admin == nil)
-	log.Println("admin == admin1: ", admin == admin1)
+	admin1, err := GetAdmin(clientConfigPath1)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	log.Println("admin2 == nil: ", admin2 == nil)
+	log.Println("admin2 == _admin2: ", admin2 == _admin2)
+	log.Println("admin2 == admin1: ", admin2 == admin1)
 }
