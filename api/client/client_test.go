@@ -1,4 +1,4 @@
-package api
+package client
 
 import (
 	"log"
@@ -12,19 +12,19 @@ var (
 )
 
 func TestGetApp(t *testing.T) {
-	app2, err := GetApp(clientConfigPath2)
+	app2, err := GetApp("channel2", clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	_app2, err := GetApp(clientConfigPath2)
+	_app2, err := GetApp("channel2", clientConfigPath2)
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	app1, err := GetApp(clientConfigPath1)
+	app1, err := GetApp("channel1", clientConfigPath1)
 
 	if err != nil {
 		t.Error(err)

@@ -1,44 +1,57 @@
-package api
+package client
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/1uvu/fabric-sdk-client/client"
 )
 
 var (
-	apps   map[string]*client.AppClient   = make(map[string]*client.AppClient)
-	admins map[string]*client.AdminClient = make(map[string]*client.AdminClient)
-
-	appOnce   sync.Once
-	adminOnce sync.Once
+	apps   sync.Map
+	admins sync.Map
 )
 
 // todo 修改为 abstract factory
-func GetApp(clientConfigPath string) (*client.AppClient, error) {
-	var err error
-	appOnce.Do(func() {
-		if _, ok := apps[clientConfigPath]; !ok {
-			apps[clientConfigPath], err = newApp(clientConfigPath)
+func GetApp(channelID, clientConfigPath string) (*client.AppClient, error) {
+	key := strings.Join([]string{channelID, clientConfigPath}, "-")
+	if _, ok := apps.Load(key); !ok {
+		app, err := newApp(channelID, clientConfigPath)
+		if err != nil {
+			return nil, err
 		}
-	})
+		apps.Store(key, app)
+	}
 
-	return apps[clientConfigPath], err
+	app, ok := apps.Load(key)
+	if !ok {
+		return nil, fmt.Errorf("failed to get app client of %s", channelID)
+	}
+
+	return app.(*client.AppClient), nil
 }
 
 func GetAdmin(clientConfigPath string) (*client.AdminClient, error) {
-	var err error
-	adminOnce.Do(func() {
-		if _, ok := admins[clientConfigPath]; !ok {
-			admins[clientConfigPath], err = newAdmin(clientConfigPath)
+	key := clientConfigPath
+	if _, ok := admins.Load(key); !ok {
+		admin, err := newAdmin(clientConfigPath)
+		if err != nil {
+			return nil, err
 		}
-	})
 
-	return admins[clientConfigPath], err
+		admins.Store(key, admin)
+	}
+
+	admin, ok := admins.Load(key)
+	if !ok {
+		return nil, fmt.Errorf("failed to get admin client")
+	}
+
+	return admin.(*client.AdminClient), nil
 }
 
-func newApp(clientConfigPath string) (*client.AppClient, error) {
+func newApp(channelID, clientConfigPath string) (*client.AppClient, error) {
 
 	conf, err := newClientConfig(clientConfigPath)
 
@@ -50,7 +63,7 @@ func newApp(clientConfigPath string) (*client.AppClient, error) {
 
 	envPairs := conf.App.Envs
 
-	app, err := client.GetAppClient("channel2", params, envPairs...)
+	app, err := client.GetAppClient(channelID, params, envPairs...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get app client: %s", err)
 	}

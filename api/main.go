@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/1uvu/Fabric-Demo/api"
+	"github.com/1uvu/Fabric-Demo/api/server"
 )
 
 func main() {
-	api.Run()
+	apiServer := new(server.Server)
+	apiServer.Run(":9999")
 }

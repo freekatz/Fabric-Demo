@@ -4,6 +4,8 @@ github.com/1uvu/fabric-sdk-client v0.0.1-alpha.1 h1:x2fMxj2bQ9u6PmFCPK7jyd2V4HhZ
 github.com/1uvu/fabric-sdk-client v0.0.1-alpha.1/go.mod h1:yoUE9/FcfIItwEkDQwTfDDGp2aoRRAKjVuBJy1hpJUc=
 github.com/1uvu/fabric-sdk-client v0.0.1-alpha.2 h1:5202ft1mebOfh1PJHDHYQM4E9CJvK49rkLZiWxJvGWw=
 github.com/1uvu/fabric-sdk-client v0.0.1-alpha.2/go.mod h1:yoUE9/FcfIItwEkDQwTfDDGp2aoRRAKjVuBJy1hpJUc=
+github.com/1uvu/fabric-sdk-client v0.0.1-alpha.3 h1:Zkgxa+IPDU/pCpx2SJVZ3Iury9tAfSk+Wy0O6XAczGM=
+github.com/1uvu/fabric-sdk-client v0.0.1-alpha.3/go.mod h1:yoUE9/FcfIItwEkDQwTfDDGp2aoRRAKjVuBJy1hpJUc=
 github.com/1uvu/fabric-sdk-client v0.0.1 h1:YrV8lUpcMvKsmp2aRheigqT8iRwatycaXjOtXV69FRg=
 github.com/1uvu/fabric-sdk-client v0.0.1/go.mod h1:yoUE9/FcfIItwEkDQwTfDDGp2aoRRAKjVuBJy1hpJUc=
 github.com/1uvu/fabric-sdk-client v0.0.3 h1:O6hB7chrLWeFTSWFi0QWQbthkEvmhAmCCDNKi95Pz3U=
