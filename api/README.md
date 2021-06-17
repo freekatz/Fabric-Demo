@@ -58,5 +58,5 @@ API 基于 1uvu/serve 和 1uvu/fabric-sdk-client 实现了一个用于访问 Fab
    | url | post body |
    |  ----  | ----  |
    | http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke | {"chaincodeID":"patient","fcn":"Register","args":["p1","{'name':'ZJH-1','gender':'male','birth':'2000-10-01','identifyID':'xxxxxx-xxxx-20001001-xxxx-xxxx','phoneNumber':'111-2200-0000','address':'CQ','nativePlace':'NG','creditCard':'6217-0000-0000-0000','healthcareID':'h1'}"],"needSubmit":true,"endpoints":[]} |
-   | 127.0.0.1:9999/app/org1/channel1/chaincode/invoke | {"chaincodeID":"patient","fcn":"Query","args":["p1"],"needSubmit":"false","endpoints":[]} |
+   | http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke | {"chaincodeID":"patient","fcn":"Query","args":["p1"],"needSubmit":"false","endpoints":[]} |
 
