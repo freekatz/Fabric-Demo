@@ -19,7 +19,7 @@ import (
 	"github.com/1uvu/serve"
 )
 
-// todo 将每一个路由的 handler 保存一一对应起来
+// todo [暂不做] 将每一个路由的 handler 保存一一对应起来
 
 var (
 	orgids []string = []string{
@@ -60,6 +60,13 @@ func (s *Server) Run(addr string) {
 
 	g := serve.Default()
 
+	{
+		g.GET("/", func(c *serve.Context) {
+			c.String(http.StatusOK, "api server start success.")
+			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
+		})
+	}
+
 	// app 接口可以操作 2 种客户端，只包含链码调用相关的操作
 	app := g.Group("/app")
 	app.Use(onlyForApp()) // app group middleware
@@ -68,7 +75,6 @@ func (s *Server) Run(addr string) {
 			data, _ := ioutil.ReadAll(c.Req.Body)
 			request := new(types.InvokeRequest)
 			json.Unmarshal(data, request)
-			request.Args[1] = strings.Replace(request.Args[1], `'`, `"`, -1)
 			appInvokeHandle(c, request)
 			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
 		})
@@ -82,20 +88,27 @@ func (s *Server) Run(addr string) {
 			data, _ := ioutil.ReadAll(c.Req.Body)
 			request := new(types.InvokeRequest)
 			json.Unmarshal(data, request)
-			request.Args[1] = strings.Replace(request.Args[1], `'`, `"`, -1)
 			adminInvokeHandle(c, request)
 			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
 		})
 	}
 
-	// test
-	// =========================
-	// curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Query\"\,\"args\":[\"p1\"]\,\"needSubmit\":false\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
-	// =========================
-	// curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Register\"\,\"args\":[\"p3\"\,\"{\'name\':\'ZJH-3\'\,\'gender\':\'male\'\,\'birth\':\'1998-10-01\'\,\'identifyID\':\'xxxxxx-xxxx-19981001-xxxx-xxxx\'\,\'phoneNumber\':\'151-2300-0000\'\,\'address\':\'ChongQing\'\,\'nativePlace\':\'NeiMengGu\'\,\'creditCard\':\'6217-0000-0000-0000\'\,\'healthcareID\':\'h3\'}\"]\,\"needSubmit\":true\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
-
+	// shell curl test
 	/*
-		{patient Register [p3 {'Name':'ZJH-3','Gender':'male','Birth':'1998-10-01','IdentifyID':'xxxxxx-xxxx-19981001-xxxx-xxxx','PhoneNumber':'151-2300-0000','Address':'ChongQing','NativePlace':'NeiMengGu','CreditCard':'6217-0000-0000-0000','HealthcareID':'h3'}] true []}
+		curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Query\"\,\"args\":[\"p1\"]\,\"needSubmit\":false\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
+
+		curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Register\"\,\"args\":[\"p3\"\,\"{\'name\':\'ZJH-3\'\,\'gender\':\'male\'\,\'birth\':\'1998-10-01\'\,\'identifyID\':\'xxxxxx-xxxx-19981001-xxxx-xxxx\'\,\'phoneNumber\':\'151-2300-0000\'\,\'address\':\'ChongQing\'\,\'nativePlace\':\'NeiMengGu\'\,\'creditCard\':\'6217-0000-0000-0000\'\,\'healthcareID\':\'h3\'}\"]\,\"needSubmit\":true\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
+
+	*/
+
+	// brower rest test
+	/*
+
+		{"chaincodeID":"patient","fcn":"Query","args":["p1"],"needSubmit":"false","endpoints":[]}
+
+		{"chaincodeID":"patient","fcn":"Register","args":["p2","{'name':'ZJH-2','gender':'male','birth':'1998-10-01','identifyID':'xxxxxx-xxxx-19981001-xxxx-xxxx','phoneNumber':'151-2300-0000','address':'ChongQing','nativePlace':'NeiMengGu','creditCard':'6217-0000-0000-0000','healthcareID':'h2'}"],"needSubmit":true,"endpoints":[]}
+
+
 	*/
 
 	g.Run(addr)
@@ -125,6 +138,10 @@ func appInvokeHandle(c *serve.Context, request *types.InvokeRequest) {
 	//=// c.Param("client")
 	//=// c.Param("opt")
 
+	for i := range request.Args {
+		request.Args[i] = strings.Replace(request.Args[i], `'`, `"`, -1)
+	}
+
 	app, err := client.GetApp(c.Param("channelid"), configs[c.Param("orgid")])
 
 	if err != nil {
@@ -151,6 +168,10 @@ func adminInvokeHandle(c *serve.Context, request *types.InvokeRequest) {
 	//=// c.Param("orgid")
 	//=// c.Param("client")
 	//=// c.Param("opt")
+
+	for i := range request.Args {
+		request.Args[i] = strings.Replace(request.Args[i], `'`, `"`, -1)
+	}
 
 	admin, err := client.GetAdmin(configs[c.Param("orgid")])
 
