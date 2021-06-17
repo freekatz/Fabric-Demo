@@ -30,6 +30,14 @@ API 基于 1uvu/serve 和 1uvu/fabric-sdk-client 实现了一个用于访问 Fab
    | needSubmit | 是否提交到账本, 即写入区块链 (true or false) |
    | endpoints | 调用节点的 Hosts 列表 (需要遵循背书策略, 建议设为空列表, 使用默认) |
 
+3. reponse body
+
+   | field | meaning |
+   |  ----  | ----  |
+   | payload | 返回调用结果的 base64 编码 |
+   | transactionInfo | 交易信息 (只针对 admin Client), 包括交易 id, 交易发起组织, 以及交易时间|
+   | chaincodeStatus | 链码调用响应状态码 (只针对 admin Client), 调用成功则为 200 |
+
 ## 调用示例
 
 如在如下场景中:
