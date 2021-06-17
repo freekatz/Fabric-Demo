@@ -19,6 +19,10 @@ import (
 	"github.com/1uvu/serve"
 )
 
+//
+// 实现 API Server, 定义路由, 处理逻辑等
+//
+
 // todo [暂不做] 将每一个路由的 handler 保存一一对应起来
 
 var (
@@ -92,24 +96,6 @@ func (s *Server) Run(addr string) {
 			log.Printf("=[Status Code: %d]=[Method: %4s]=[Path: %6s]\n", c.StatusCode, c.Method, c.Path)
 		})
 	}
-
-	// shell curl test
-	/*
-		curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Query\"\,\"args\":[\"p1\"]\,\"needSubmit\":false\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
-
-		curl -X POST -d {\"chaincodeID\":\"patient\"\,\"fcn\":\"Register\"\,\"args\":[\"p3\"\,\"{\'name\':\'ZJH-3\'\,\'gender\':\'male\'\,\'birth\':\'1998-10-01\'\,\'identifyID\':\'xxxxxx-xxxx-19981001-xxxx-xxxx\'\,\'phoneNumber\':\'151-2300-0000\'\,\'address\':\'ChongQing\'\,\'nativePlace\':\'NeiMengGu\'\,\'creditCard\':\'6217-0000-0000-0000\'\,\'healthcareID\':\'h3\'}\"]\,\"needSubmit\":true\,\"endpoints\":[]} http://127.0.0.1:9999/app/org1/channel1/chaincode/invoke
-
-	*/
-
-	// brower rest test
-	/*
-
-		{"chaincodeID":"patient","fcn":"Query","args":["p1"],"needSubmit":"false","endpoints":[]}
-
-		{"chaincodeID":"patient","fcn":"Register","args":["p2","{'name':'ZJH-2','gender':'male','birth':'1998-10-01','identifyID':'xxxxxx-xxxx-19981001-xxxx-xxxx','phoneNumber':'151-2300-0000','address':'ChongQing','nativePlace':'NeiMengGu','creditCard':'6217-0000-0000-0000','healthcareID':'h2'}"],"needSubmit":true,"endpoints":[]}
-
-
-	*/
 
 	g.Run(addr)
 }

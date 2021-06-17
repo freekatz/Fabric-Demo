@@ -114,6 +114,7 @@ func (contract *SmartContract) Verify(ctx contractapi.TransactionContextInterfac
 		return fmt.Errorf("Verify failed: no such info. %s", err.Error())
 	}
 
+	// todo 隐藏这里的敏感信息
 	if string(digestAsBytes) != patientDigest {
 		return fmt.Errorf("Verify failed: info can not match %s, %s.", string(digestAsBytes), patientDigest)
 	}

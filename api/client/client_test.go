@@ -6,9 +6,8 @@ import (
 )
 
 var (
-	clientConfigPath1 string = "./config/client-org1.yaml"
-	clientConfigPath2 string = "./config/client-org2.yaml"
-	clientConfigPath3 string = "./config/client-org3.yaml"
+	clientConfigPath1 string = "./test_config/client-org1.yaml"
+	clientConfigPath2 string = "./test_config/client-org2.yaml"
 )
 
 func TestGetApp(t *testing.T) {
@@ -30,9 +29,23 @@ func TestGetApp(t *testing.T) {
 		t.Error(err)
 	}
 
-	log.Println("app2 == nil: ", app2 == nil)
-	log.Println("app2 == _app2: ", app2 == _app2)
-	log.Println("app2 == app1: ", app2 == app1)
+	if app2 == nil {
+		t.Error("app2 == nil")
+	} else {
+		log.Println("app2 == nil: ", app2 == nil)
+	}
+
+	if app2 != _app2 {
+		t.Error("app2 != _app2")
+	} else {
+		log.Println("app2 == _app2: ", app2 == _app2)
+	}
+
+	if app2 == app1 {
+		t.Error("app2 == app1")
+	} else {
+		log.Println("app2 == app1: ", app2 == app1)
+	}
 }
 
 func TestGetAdmin(t *testing.T) {

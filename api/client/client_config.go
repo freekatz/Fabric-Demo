@@ -7,6 +7,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//
+// 读入 *.yaml 配置文件
+//
+
 type clientConfig struct {
 	Admin adminConfig `yaml:"admin"`
 	App   appConfig   `yaml:"app"`

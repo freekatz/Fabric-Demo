@@ -8,6 +8,10 @@ import (
 	"github.com/1uvu/fabric-sdk-client/client"
 )
 
+//
+// 根据配置获取 Client 单例, 支持并发访问
+//
+
 var (
 	apps   sync.Map
 	admins sync.Map
