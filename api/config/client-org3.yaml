@@ -1,7 +1,9 @@
 ---
 version: 1.0
 
-globel:
+global:
+  - key: CRYPTO_CONFIG_BASE_PATH
+    val: /home/zjh/Projects/Fabric/Fabric-Demo/network/orgs
 
 admin:
   params:
@@ -9,26 +11,30 @@ admin:
     orgMSP: Org3MSP
     orgHost: org3.example.com
     orgAdmin: Admin
-    configPath: ../network/orgs/admin/admin-org3.yaml
+    configPath: ${CRYPTO_CONFIG_BASE_PATH}/admin/admin-org3.yaml
   envs:
     - key: DISCOVERY_AS_LOCALHOST
       val: true
     - key: TEST_IN_SHELL
       val: false
-
+    - key: CRYPTO_CONFIG_BASE_PATH
+      val: ${CRYPTO_CONFIG_BASE_PATH}
+      
 app:
   params:
     orgName: Org3
     orgMSP: Org3MSP
     orgHost: org3.example.com
     orgAdmin: Admin
-    configPath: ../network/orgs/app/app-org3.yaml
+    configPath: ${CRYPTO_CONFIG_BASE_PATH}/app/app-org3.yaml
 
     orgUser: User1
-    credPath: ../network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp
-    certPath: ../network/orgs/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/signcerts/User1@org3.example.com-cert.pem
+    credPath: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp
+    certPath: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/signcerts/User1@org3.example.com-cert.pem
   envs:
     - key: DISCOVERY_AS_LOCALHOST
       val: true
     - key: TEST_IN_SHELL
       val: false
+    - key: CRYPTO_CONFIG_BASE_PATH
+      val: ${CRYPTO_CONFIG_BASE_PATH}

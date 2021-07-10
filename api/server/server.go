@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/1uvu/Fabric-Demo/api/client"
-	"github.com/1uvu/fabric-sdk-client/types"
+	"github.com/1uvu/fabric-sdk-client/pkg/client"
+	"github.com/1uvu/fabric-sdk-client/pkg/types"
 	"github.com/1uvu/serve"
 )
 

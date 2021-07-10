@@ -17,7 +17,7 @@ Fabric 数据存储、共享和溯源 Demo
 
 ## WIP
 
-- [ ] [api: 基于 serve 和 cli 开发的, 向外提供调用 fabric 网络各种服务的统一接口](./api)
+- [ ] [api: 基于 serve 和 cli 开发的, 向外提供调用 fabric 网络各种服务的统一接口，目前主功能已测试通过](./api)
   
 
 ## TODO
