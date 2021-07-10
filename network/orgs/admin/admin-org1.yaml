@@ -7,7 +7,7 @@ client:
     level: info
 
   cryptoconfig:
-    path: /home/fabric/Project/Fabric-Demo/network/orgs
+    path: ${CRYPTO_CONFIG_BASE_PATH}
 
   credentialStore:
     path: "/tmp/state-store"
@@ -29,9 +29,9 @@ client:
 
     client:
       key:
-        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
+        path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
       cert:
-        path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
+        path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
 channels:
 
@@ -185,7 +185,7 @@ orderers:
     url: orderer.example.com:7050
 
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
 peers:
   _default:
@@ -204,7 +204,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
 
   peer0.org2.example.com:
     url: peer0.org2.example.com:9051
@@ -214,7 +214,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
 
   peer0.org3.example.com:
     url: peer0.org3.example.com:11051
@@ -224,7 +224,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
 
 
 certificateAuthorities:
@@ -233,12 +233,12 @@ certificateAuthorities:
     grpcOptions:
       ssl-target-name-override: ca.org1.example.com
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -247,12 +247,12 @@ certificateAuthorities:
   tlsca.org1.example.com:
     url: https://ca.org1.example.com:7154
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -263,12 +263,12 @@ certificateAuthorities:
     grpcOptions:
       ssl-target-name-override: ca.org2.example.com
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -277,12 +277,12 @@ certificateAuthorities:
   tlsca.org2.example.com:
     url: https://ca.org2.example.com:9154
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org2.example.com/users/Admin@org2.example.com/tls/client.crt
 
     registrar:
       enrollId: admin2
@@ -293,12 +293,12 @@ certificateAuthorities:
     grpcOptions:
       ssl-target-name-override: ca.org3.example.com
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin
@@ -307,12 +307,12 @@ certificateAuthorities:
   tlsca.org3.example.com:
     url: https://ca.org3.example.com:11154
     tlsCACerts:
-      path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
+      path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/tlsca/tlsca.org3.example.com-cert.pem
       client:
         key:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.key
         cert:
-          path: /home/fabric/Project/Fabric-Demo/network/orgs/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
+          path: ${CRYPTO_CONFIG_BASE_PATH}/peerOrganizations/org3.example.com/users/Admin@org3.example.com/tls/client.crt
 
     registrar:
       enrollId: admin3
