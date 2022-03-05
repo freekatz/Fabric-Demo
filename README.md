@@ -14,11 +14,7 @@ Fabric 数据存储、共享和溯源 Demo
 - [x] [network: 可扩展的 fabric 网络搭建相关材料](./network)
 - [x] ~~serve~~ (已迁移到 [serve](https://github.com/1uvu/serve): 纯 golang 实现的用于编写 http 服务的简单 web 框架
 - [x] [structures: 与业务相关的各种数据结构](./structures)
-
-## WIP
-
-- [ ] [api: 基于 serve 和 cli 开发的, 向外提供调用 fabric 网络各种服务的统一接口，目前主功能已测试通过](./api)
-  
+- [x] [api: 基于 serve 和 cli 开发的, 向外提供调用 fabric 网络各种服务的统一接口，目前主功能已测试通过](./api)
 
 ## TODO
 
